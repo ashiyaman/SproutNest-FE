@@ -6,9 +6,7 @@ const SPROUTNEST_URI = 'http://localhost:3000'
 export const fetchCategories = createAsyncThunk(
     'categories/fetch',
     async() => {
-        console.log('...in fetch slice...')
         const response = await axios.get(`${SPROUTNEST_URI}/categories`)
-        console.log(response)
         if(response){
             return response.data
         }

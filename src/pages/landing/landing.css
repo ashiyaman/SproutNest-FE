@@ -1,0 +1,14 @@
+.category-image{
+    color: #224d43;
+    transition: all 0.3s ease;
+}
+
+.category-image > img {
+    border: solid 3px #224d43;
+    width: 8vw;
+}
+
+.category-image:hover{
+    
+    transform: scale(1.1)
+}
