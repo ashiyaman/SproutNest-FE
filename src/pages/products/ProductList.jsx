@@ -1,4 +1,5 @@
 const ProductList = ({products}) => {
+    console.log(products)
     return (        
             <div className='row'>
             {products.map(product => (

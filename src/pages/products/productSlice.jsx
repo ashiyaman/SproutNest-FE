@@ -7,7 +7,6 @@ export const fetchProducts = createAsyncThunk(
     'products/fetch',
     async() => {
         const response = await axios.get(`${SPROUTNEST_URI}/products`)
-        console.log('...in slice...', response.data)
         return response.data
     }
 )
