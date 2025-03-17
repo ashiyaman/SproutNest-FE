@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Landing from './pages/landing/Landing'
-import Products from './pages/Products'
+import Products from './pages/products/Products'
 import Header from './components/Header'
 
 function App() {
