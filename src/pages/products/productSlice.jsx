@@ -11,10 +11,19 @@ export const fetchProducts = createAsyncThunk(
     }
 )
 
+export const fetchProductById = createAsyncThunk(
+    'product/fetchById',
+    async(productId) => {
+        const response = await axios.get(`${SPROUTNEST_URI}/products/${productId}`)
+        return response.data
+    }
+)
+
 export const productSlice = createSlice({
     name: 'Products',
     initialState: {
         products: [],
+        selectedProduct: null,
         status: 'idle',
         error: null
     },
@@ -28,6 +37,17 @@ export const productSlice = createSlice({
                 state.products = action.payload
             })
             .addCase(fetchProducts.rejected, (state, action) => {
+                state.status = 'error'
+                state.error = action.payload
+            })
+            .addCase(fetchProductById.pending, state => {
+                state.status = 'loading'
+            })
+            .addCase(fetchProductById.fulfilled, (state, action) => {
+                state.status = 'success',
+                state.selectedProduct = action.payload
+            })
+            .addCase(fetchProductById.rejected, (state, action) => {
                 state.status = 'error'
                 state.error = action.payload
             })

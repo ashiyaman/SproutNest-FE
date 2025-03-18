@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Landing from './pages/landing/Landing'
 import Products from './pages/products/Products'
 import Header from './components/Header'
+import ProductDetails from './pages/products/ProductDetails'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/products' element={<Products />} />
+          <Route path='/products/:productId' element={<ProductDetails />} />
         </Routes>
       </Router>
     </div>
