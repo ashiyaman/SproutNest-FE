@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const FilterModal = ({ setShowFilterModal, priceRangeHandler }) => {
+const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(2000);
 
@@ -26,7 +26,7 @@ const FilterModal = ({ setShowFilterModal, priceRangeHandler }) => {
     <div className="filter-modal">
       <div className='d-flex justify-content-between'>
         <h4 className='fw-bold'>Filter By:</h4>
-        <button className="rounded-circle fw-bold" style={{color: '#224d43'}} onClick={() => setShowFilterModal(false)}>
+        <button className="rounded-circle fw-bold" style={{color: '#224d43'}} onClick={() => closeModalHandler()}>
             X
         </button>
       </div>

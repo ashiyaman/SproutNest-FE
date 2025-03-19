@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 const ProductDetails = () => {
     const{selectedProduct, status, error} = useSelector(state => state.products)
 
-    console.log('sel...', selectedProduct)
     return (
         <main className='container py-4'>
             {status === 'loading' && <p>Loading...</p>}
@@ -70,7 +69,7 @@ const ProductDetails = () => {
                         <h5 className='fw-bold'>ABOUT:</h5>
                         <p>{selectedProduct.details}</p>
                     </section>
-                    <button className='btn btn-lg btn-success text-light my-2 rounded fw-bold'>ADD TO CART</button>
+                    <button className='btn btn-success text-light my-2 rounded fw-bold'>ADD TO CART</button>
                 </div>
             </div>}
         </main>

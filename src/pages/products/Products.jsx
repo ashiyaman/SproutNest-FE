@@ -33,11 +33,14 @@ const Products = () => {
     const priceRangeHandler = (minPrice, maxPrice) => {
         const filteredProducts = [...products].filter(product => 
             {
-                console.log(product.price > minPrice, product.price < maxPrice)
                 return product.price >= minPrice && product.price <= maxPrice
             })
-        console.log(filteredProducts)
         setDisplayProducts(filteredProducts)
+    }
+
+    const closeModalHandler = () => {
+        setDisplayProducts(products)
+        setShowFilterModal(false)
     }
 
     return (
@@ -60,7 +63,7 @@ const Products = () => {
                     }
                 </section>
                 {showFilterModal && 
-                    <FilterModal setShowFilterModal={setShowFilterModal} priceRangeHandler={priceRangeHandler}/>
+                    <FilterModal closeModalHandler={closeModalHandler} priceRangeHandler={priceRangeHandler}/>
                 }
             </div>
         </main>
