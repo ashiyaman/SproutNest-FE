@@ -8,7 +8,6 @@
     width: 8vw;
 }
 
-.category-image:hover{
-    
+.category-image:hover{    
     transform: scale(1.1)
 }
