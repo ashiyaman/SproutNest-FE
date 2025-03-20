@@ -9,6 +9,8 @@ import Header from './components/Header'
 import ProductDetails from './pages/products/ProductDetails'
 import ProductCard from './components/productCard/ProductCard'
 
+import './App.css'
+
 function App() {
   return (
     <div style={{minHeight: '100vw', backgroundColor: '#F5F5DC'}}>      

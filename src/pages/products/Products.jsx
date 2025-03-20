@@ -6,7 +6,6 @@ import CategoryList from '../../components/CategoryList'
 import ProductList from './ProductList'
 import FilterModal from '../../components/FilterModal'
 import './modal.css'
-import './products.css'
 
 const Products = () => {
     const dispatch = useDispatch()
