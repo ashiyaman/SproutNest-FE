@@ -1,6 +1,11 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { setRatingFilter } from "./products/productSlice";
 
 const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
+  const dispatch = useDispatch()
+
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(2000);
 
@@ -16,6 +21,10 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
     priceRangeHandler(minPrice, value)
   };
 
+  const ratingHandler = (selectedRating) => {
+    dispatch(setRatingFilter(selectedRating))
+  }
+
   const minPercentage = (minPrice / 2000) * 100;
   const maxPercentage = (maxPrice / 2000) * 100;
   const trackStyle = {
@@ -30,6 +39,7 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
             X
         </button>
       </div>
+      <hr/>
       <section  className='my-3'>
         <h5>Price:</h5>
         <div className="price-inputs">
@@ -64,8 +74,19 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
             />
         </div>
       </section>
+      <hr/>
       <section>
         <h5>Rating:</h5>
+        <div className='my-2'>
+          <input type='radio' name='rating' 
+            onChange={() => ratingHandler(4)}/> 4<i className="bi bi-star-fill text-warning"></i> & up<br/>
+          <input type='radio' name='rating' 
+            onChange={() => ratingHandler(3)}/> 3<i className="bi bi-star-fill text-warning"></i> & up<br/>
+          <input type='radio' name='rating' 
+            onChange={() => ratingHandler(2)}/> 2<i className="bi bi-star-fill text-warning"></i> & up<br/>
+          <input type='radio' name='rating'
+            onChange={() => ratingHandler(1)}/> 1<i className="bi bi-star-fill text-warning"></i> & up<br/>
+        </div>
       </section>
     </div>
   );

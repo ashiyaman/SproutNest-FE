@@ -14,9 +14,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductsByCategory = createAsyncThunk(
     'products/fetchByCategory',
     async(categoryId) => {
-        console.log('..in slice cate', categoryId)
         const response = await axios.get(`${SPROUTNEST_URI}/products/category/${categoryId}`)
-        console.log(response.data)
         return response.data
     }
 )
@@ -34,8 +32,24 @@ export const productSlice = createSlice({
     initialState: {
         products: [],
         selectedProduct: null,
+        filteredProducts: [],
+        filter: 'All',
         status: 'idle',
         error: null
+    },
+    reducers: {
+        setRatingFilter: (state, action) => {
+            const ratingThreshold = parseFloat(action.payload)
+            state.filter = action.payload
+            if(state.filter === 'All'){
+                state.filteredProducts = [...state.products]
+            }
+            else{
+                state.filteredProducts = state.products.filter(product => 
+                        product.rating >= ratingThreshold.toFixed(2)
+                    )
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -74,5 +88,7 @@ export const productSlice = createSlice({
             })
     }
 })
+
+export const { setRatingFilter } = productSlice.actions
 
 export default productSlice.reducer

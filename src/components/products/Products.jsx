@@ -8,9 +8,8 @@ import FilterModal from '../../components/FilterModal'
 import './modal.css'
 
 const Products = () => {
-    //console.log('products in cate...', categoryProducts)
     const dispatch = useDispatch()
-    const {products, status, error} = useSelector(state => state.products)
+    const {products, filteredProducts, status, error} = useSelector(state => state.products)
     const {selectedCategory} = useSelector(state => state.categories)
     const [displayProducts, setDisplayProducts] = useState([])
     const [showFilterModal, setShowFilterModal] = useState(false)
@@ -25,7 +24,12 @@ const Products = () => {
         if(products.length > 0){
             setDisplayProducts(products)
         }
-    }, [products])
+        if(filteredProducts.length > 0){
+            setDisplayProducts(filteredProducts)
+        }
+    }, [products, filteredProducts])
+
+    
 
     const sortHandler = (sortValue) => {
         if(sortValue){
@@ -43,7 +47,6 @@ const Products = () => {
     }
 
     const closeModalHandler = () => {
-        setDisplayProducts(products)
         setShowFilterModal(false)
     }
 
