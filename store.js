@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { landingSlice } from './src/pages/landing/landingSlice';
-import { productSlice } from './src/pages/products/productSlice';
+import { productSlice } from './src/components/products/productSlice';
 import { productCardSlice } from './src/components/productCard/productCardSlice';
 
 const store = configureStore({

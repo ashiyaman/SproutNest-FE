@@ -4,9 +4,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Landing from './pages/landing/Landing'
-import Products from './pages/products/Products'
+import Products from './components/products/Products'
 import Header from './components/Header'
-import ProductDetails from './pages/products/ProductDetails'
+import ProductDetails from './components/products/ProductDetails'
 import ProductCard from './components/productCard/ProductCard'
 
 import './App.css'

@@ -8,13 +8,17 @@ import FilterModal from '../../components/FilterModal'
 import './modal.css'
 
 const Products = () => {
+    //console.log('products in cate...', categoryProducts)
     const dispatch = useDispatch()
     const {products, status, error} = useSelector(state => state.products)
+    const {selectedCategory} = useSelector(state => state.categories)
     const [displayProducts, setDisplayProducts] = useState([])
     const [showFilterModal, setShowFilterModal] = useState(false)
 
     useEffect(() => {
-        dispatch(fetchProducts())
+        if(!selectedCategory){
+            dispatch(fetchProducts())
+        }
     }, [])
 
     useEffect(() => {
