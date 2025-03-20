@@ -14,7 +14,7 @@ const ProductDetails = () => {
                         <ol className="carousel-indicators">
                             {selectedProduct?.images.map((image, index) => {
                                 const activeClass = index === 0 ? 'active' : ''
-                                return <li key={index} data-bs-target="#productCarousel" data-slide-to={index} className={`${activeClass}`}></li>
+                                return <button key={index} data-bs-target="#productCarousel" data-bs-slide-to={index} className={`${activeClass}`}></button>
                             })}
                         </ol>
                         <div className="carousel-inner">
@@ -69,7 +69,10 @@ const ProductDetails = () => {
                         <h5 className='fw-bold'>ABOUT:</h5>
                         <p>{selectedProduct.details}</p>
                     </section>
-                    <button className='btn btn-success text-light my-2 rounded fw-bold'>ADD TO CART</button>
+                    <div className='flex justify-content-between'>
+                        <button className='btn btn-success text-light my-2 rounded-pill fw-bold'>ADD TO CART</button>
+                        <button className='btn btn-danger text-light my-2 rounded-pill fw-bold'>ADD TO WISHLIST</button>
+                    </div>
                 </div>
             </div>}
         </main>

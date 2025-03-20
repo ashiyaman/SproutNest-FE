@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import { fetchProductById } from "./productSlice"
-import { addToWishlist } from "../../components/productCard/productCardSlice"
+import { addToWishlist, addToCart } from "../../components/productCard/productCardSlice"
 
 const ProductList = ({products}) => {
     const dispatch = useDispatch()
@@ -29,12 +29,16 @@ const ProductList = ({products}) => {
                         <p className="card-title fw-bold">{product.name}</p>
                         <p><i className="bi bi-star-fill text-warning"> </i>{product.rating} | {product.reviews.length} reviews</p>
                         <p className='fw-semibold'>₹ {product.price}</p>
-                        <button className='btn btn-success fw-bold rounded-pill my-2'>ADD TO CART</button>
-                        <button 
-                            onClick={() => dispatch(addToWishlist(product))}
-                            className='btn btn-lg wishlist-heart'>
-                            <i className="bi bi-heart-fill text-danger"></i>
-                        </button>
+                        <div className='d-flex flex-column'>
+                            <button
+                                onClick={() => dispatch(addToCart(product))}
+                                className='btn btn-outline-success fw-bold rounded-pill my-2'>ADD TO CART</button>
+                            <button 
+                                onClick={() => dispatch(addToWishlist(product))}
+                                className='btn btn-outline-danger fw-bold rounded-pill my-2'>
+                                ADD TO WISHLIST
+                            </button>
+                        </div>
                     </div>                
                 </div>
                 </div>

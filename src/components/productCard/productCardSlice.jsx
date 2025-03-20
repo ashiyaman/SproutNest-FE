@@ -4,6 +4,7 @@ export const productCardSlice = createSlice({
     name: 'productCard',
     initialState: {
         wishListedProducts: [],
+        cartProducts: [],
         status: 'idle',
         error: null
     },
@@ -12,12 +13,18 @@ export const productCardSlice = createSlice({
             state.wishListedProducts.push(action.payload)
         },
         removeFromWishList: (state, action) => {
-            state.wishListedProducts.filter(product => product._id !== action.payload)
+            state.wishListedProducts.filter(product => product._id !== action.payload._id)
+        },
+        addToCart: (state, action) => {
+            state.cartProducts.push(action.payload)
+        },
+        removeFromCart: (state, action) => {
+            state.cartProducts.filter(product => product._id !== action.payload._id)
         }
     }
 })
 
 export default productCardSlice.reducer
 
-export const { addToWishlist, removeFromWishList } = productCardSlice.actions
+export const { addToWishlist, removeFromWishList, addToCart, removeFromCart } = productCardSlice.actions
 

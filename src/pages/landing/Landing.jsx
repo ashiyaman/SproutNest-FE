@@ -2,12 +2,13 @@
     import { useDispatch, useSelector } from 'react-redux'
 
     import { fetchCategories } from './landingSlice'
-    import { Link } from 'react-router-dom'
+    import { Link, useNavigate } from 'react-router-dom'
     import '../landing/landing.css'
     import CategoryList from '../../components/CategoryList'
 
     const Landing = () => {
         const dispatch = useDispatch()
+        const navigate = useNavigate()
         const {categories} = useSelector(state => state.categories)
 
         useEffect(() => {
@@ -15,9 +16,9 @@
         }, [])
 
         return (
-            <main className='container py-4'>                
+            <main className='container py-4 text-center'>                
                 <CategoryList/>
-                <section id='heroImages' className='carousel slide' data-bs-ride='carousel' data-bs-interval='3000'>
+                <section id='heroImages' className='carousel slide my-4' data-bs-ride='carousel' data-bs-interval='3000'>
                     <div className='carousel-inner'>
                         <div className='carousel-item active'>
                         <img src='../images/hero_image_1.jpg' className='d-block w-100 rounded' alt='Hero Image' style={{maxHeight: '80vh'}}/>
@@ -41,6 +42,7 @@
                         <span className='visually-hidden'>Next</span>
                     </button>
                 </section>
+                <button onClick={() => navigate('/products')} className='btn btn-outline-success my-4 fw-bold'>VIEW PRODUCTS</button>
             </main>
         )
     }
