@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromWishList, addToCart, removeFromCart, addToWishlist } from "./productCardSlice";
+import { addProduct, removeProduct, changeQuantity } from "./productCardSlice";
 import { Link } from "react-router-dom";
 
 const ProductCard = () => {
     const dispatch = useDispatch();
-    const { wishListedProducts = [] } = useSelector(state => state.productCard);
-    const { cartProducts = [] } = useSelector(state => state.productCard);
+    const { wishListedProducts = [],  cartProducts = [] } = useSelector(state => state.productCard);
 
     return (
         <main className="container py-5" style={{ color: "#224d43" }}>
@@ -37,7 +36,7 @@ const ProductCard = () => {
 
                                             <button 
                                                 className="btn btn-sm border-0 text-danger fs-5"
-                                                onClick={() => dispatch(removeFromCart(cartProduct._id))}
+                                                onClick={() => dispatch(removeProduct('cart', cartProduct))}
 
                                             >
                                                 &times;
@@ -53,15 +52,23 @@ const ProductCard = () => {
                                         
                                         <div className="d-flex align-items-center my-2">
                                             <div className="btn btn-outline-success btn-sm rounded-pill">
-                                                <button className='bg-transparent border-0'> - </button>
-                                                <span className="mx-3 fw-semibold">{1}</span>
-                                                <button className='bg-transparent border-0'> + </button>
+                                                <button 
+                                                    onClick={() => dispatch(changeQuantity({type:'cart', product: cartProduct, change: -1}))} 
+                                                    className='bg-transparent border-0'> - </button>
+                                                <span className="mx-3 fw-semibold">{cartProduct.quantity}</span>
+                                                <button 
+                                                     onClick={() => dispatch(changeQuantity({type:'cart', product: cartProduct, change: +1}))} 
+                                                    className='bg-transparent border-0'> + </button>
                                             </div>
                                         </div>                                       
                                         
-                                        <div className="d-flex justify-content-between align-items-center">
+                                        <div className="d-flex justify-content-between align-items-center my-3">
                                             <button 
-                                                onClick={() => dispatch(addToWishlist(cartProduct))}
+                                                onClick={() => {
+                                                    dispatch(addProduct({type: 'wishlist', product: cartProduct}))
+                                                    dispatch(removeProduct({type: 'cart', product: cartProduct}))
+                                                }
+                                                }
                                                 className="btn btn-success fw-semibold rounded-pill px-3">
                                                 ADD TO WISHLIST
                                             </button>
@@ -103,7 +110,7 @@ const ProductCard = () => {
 
                                             <button 
                                                 className="btn btn-sm border-0 text-danger fs-5"
-                                                onClick={() => dispatch(removeFromWishList(wishListProduct._id))}
+                                                onClick={() => dispatch(removeProduct('wishlist', wishListProduct))}
                                                 title="Remove from Wishlist"
                                             >
                                                 &times;
@@ -118,13 +125,24 @@ const ProductCard = () => {
                                         }
                                         
                                         <div className="d-flex align-items-center my-2">
-                                            <button className="btn btn-outline-success btn-sm rounded-pill px-2">-</button>
-                                            <span className="mx-3 fw-semibold">{1}</span>
-                                            <button className="btn btn-outline-success btn-sm rounded-pill px-2">+</button>
-                                        </div>                                       
+                                            <div className="btn btn-outline-success btn-sm rounded-pill">
+                                                <button 
+                                                    onClick={() => dispatch(changeQuantity({type:'wishlist', product: wishListProduct, change: -1}))} 
+                                                    className='bg-transparent border-0'> - </button>
+                                                <span className="mx-3 fw-semibold">{wishListProduct.quantity}</span>
+                                                <button 
+                                                     onClick={() => dispatch(changeQuantity({type:'wishlist', product: wishListProduct, change: +1}))} 
+                                                    className='bg-transparent border-0'> + </button>
+                                            </div>
+                                        </div>                                         
                                         
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <button className="btn btn-success fw-semibold rounded-pill px-3">
+                                            <button 
+                                                onClick={() => {
+                                                    dispatch(addProduct({type: 'cart', product: wishListProduct}))
+                                                    dispatch(removeProduct({type: 'wishlist', product: wishListProduct}))
+                                                }}
+                                                className="btn btn-success fw-semibold rounded-pill px-3">
                                                 ADD TO CART
                                             </button>
                                             <span className="fw-bold text-success fs-5">₹ {wishListProduct.price}</span>

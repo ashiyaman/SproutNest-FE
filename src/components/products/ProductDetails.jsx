@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { addProduct } from "../productCard/productCardSlice"
 
 const ProductDetails = () => {
     const{selectedProduct, status, error} = useSelector(state => state.products)
@@ -22,7 +23,7 @@ const ProductDetails = () => {
                                 const activeClass = index === 0 ? 'active' : ''
                                 return (
                                     <div key={index} className={`carousel-item ${activeClass}`}>
-                                        <img className="d-block w-350 img-fluid" src={image} alt={`${selectedProduct.name}-${index}`}/>
+                                        <img className="d-block w-100 img-fluid rounded" src={image} alt={`${selectedProduct.name}-${index}`}/>
                                     </div>
                                 )
                             })}
@@ -70,8 +71,8 @@ const ProductDetails = () => {
                         <p>{selectedProduct.details}</p>
                     </section>
                     <div className='flex justify-content-between'>
-                        <button className='btn btn-success text-light my-2 rounded-pill fw-bold'>ADD TO CART</button>
-                        <button className='btn btn-danger text-light my-2 rounded-pill fw-bold'>ADD TO WISHLIST</button>
+                        <button onClick={() => addProduct({type: 'cart', product: selectedProduct})} className='btn btn-success text-light my-2 rounded-pill fw-bold'>ADD TO CART</button>
+                        <button onClick={() => addProduct({type: 'wishlist', product:selectedProduct})}  className='btn btn-danger text-light my-2 rounded-pill fw-bold'>ADD TO WISHLIST</button>
                     </div>
                 </div>
             </div>}
