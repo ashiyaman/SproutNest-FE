@@ -11,6 +11,8 @@ import ProductCard from './components/order/ProductCard'
 
 import './App.css'
 import Cart from './components/order/Cart'
+import User from './components/user/User'
+import UserForm from './components/user/UserForm'
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path='/products/:productId' element={<ProductDetails />} />
           <Route path='/wishlist' element={<ProductCard />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/user' element={<User />} />
+          <Route path='/userForm' element={<UserForm />} />
         </Routes>
       </Router>
     </div>

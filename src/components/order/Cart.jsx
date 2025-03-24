@@ -1,12 +1,22 @@
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 
 import CartList from "../products/CartList"
+import { postUser } from "../user/userSlice"
 
 const Cart = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { cartProducts = [], totalCartAmount, cartDiscount, deliveryCharge } = useSelector(state => state.productCard)
+    const {user, status, error} = useSelector(state => state.user)
 
     const totalItems = cartProducts.reduce((acc, curr) => acc + curr.quantity, 0)
+
+    const checkoutHandler = () => {
+        if(!user){
+           navigate('/userForm')
+        }
+    }
 
     return (
         <main className='container text-center py-5' style={{ color: "#224d43" }}>
@@ -51,6 +61,7 @@ const Cart = () => {
                                 <hr/>
                                 <p>You will save ₹{cartDiscount} on this order.</p>
                                 <button 
+                                    onClick={() => checkoutHandler()}
                                     style={{backgroundColor: '#8b5e3c'}}
                                     className='btn text-light mt-1 mb-3 rounded-pill fw-bold'>PLACE ORDER</button>
                             </div>
