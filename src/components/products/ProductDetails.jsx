@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { addProduct } from "../productCard/productCardSlice"
+import { addProduct } from "../order/productCardSlice"
 
 const ProductDetails = () => {
     const dispatch = useDispatch()

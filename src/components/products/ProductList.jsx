@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { fetchProductById } from "./productSlice"
-import { addProduct } from "../productCard/productCardSlice"
+import { addProduct } from "../order/productCardSlice"
 const ProductList = ({products}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()

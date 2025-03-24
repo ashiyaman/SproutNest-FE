@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, removeProduct, changeQuantity } from "./productCardSlice";
+import { addProduct, removeProduct } from "./productCardSlice";
 import { Link } from "react-router-dom";
 
 import CartList from "../products/CartList";

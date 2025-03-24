@@ -1,13 +1,22 @@
 import { Link } from 'react-router-dom'
 
+import { setSearchFilter } from './products/productSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 const Header = () => {
+    const dispatch = useDispatch()
+
+    const searchHandler = (searchValue) => {
+        dispatch(setSearchFilter(searchValue))
+    }
+
     return (
         <nav className='navbar navbar-expand-lg navbar-dark py-3 w-100' style={{backgroundColor: '#8B5E3C'}}>
             <div className='container'>
                 <a href='/' className='navbar-brand text-light fw-bold'>SproutNest</a>
                 <button className='rounded-pill bg-light border-success border-3'>
                     <span><i className='bi bi-search '></i></span>
-                    <input type='text' placeholder='Search' className='border-0 px-2'/>
+                    <input type='text' onChange={(e) => searchHandler(e.target.value)} placeholder='Search' className='border-0 px-2'/>
                 </button>               
                 <button className='navbar-toggler border-light border-2 text-light' style={{color: '#224d43'}} data-bs-toggle='collapse' data-bs-target='#collapsibleElement'>
                     <span className='navbar-toggler-icon' ></span>

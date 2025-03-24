@@ -30,14 +30,19 @@ export const fetchProductById = createAsyncThunk(
 export const productSlice = createSlice({
     name: 'Products',
     initialState: {
+        displayProducts: [],
+        filteredProducts: [],
         products: [],
         selectedProduct: null,
-        filteredProducts: [],
         filter: 'All',
         status: 'idle',
         error: null
     },
     reducers: {
+        setDisplayProducts: (state, action) => {
+            state.displayProducts = action.payload
+        },
+
         setRatingFilter: (state, action) => {
             const ratingThreshold = parseFloat(action.payload)
             state.filter = action.payload
@@ -49,6 +54,12 @@ export const productSlice = createSlice({
                         product.rating >= ratingThreshold.toFixed(2)
                     )
             }
+        },
+        setSearchFilter: (state, action) => {
+            console.log('..in slice...', action.payload)
+            const matchedProducts = state.products.filter(p => (p.name.toLowerCase().includes(action.payload) || p.details.includes(action.payload)))
+            console.log(matchedProducts)
+            state.displayProducts = matchedProducts
         }
     },
     extraReducers: (builder) => {
@@ -89,6 +100,6 @@ export const productSlice = createSlice({
     }
 })
 
-export const { setRatingFilter } = productSlice.actions
+export const { setDisplayProducts, setRatingFilter, setSearchFilter } = productSlice.actions
 
 export default productSlice.reducer

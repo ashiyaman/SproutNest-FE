@@ -7,10 +7,10 @@ import Landing from './pages/landing/Landing'
 import Products from './components/products/Products'
 import Header from './components/Header'
 import ProductDetails from './components/products/ProductDetails'
-import ProductCard from './components/productCard/ProductCard'
+import ProductCard from './components/order/ProductCard'
 
 import './App.css'
-import Cart from './components/productCard/Cart'
+import Cart from './components/order/Cart'
 
 function App() {
   return (

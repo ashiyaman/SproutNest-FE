@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {fetchProducts} from './productSlice'
+import {fetchProducts, setDisplayProducts} from './productSlice'
 import CategoryList from '../../components/CategoryList'
 import ProductList from './ProductList'
 import FilterModal from '../../components/FilterModal'
@@ -11,7 +11,7 @@ const Products = () => {
     const dispatch = useDispatch()
     const {products, filteredProducts, status, error} = useSelector(state => state.products)
     const {selectedCategory} = useSelector(state => state.categories)
-    const [displayProducts, setDisplayProducts] = useState([])
+    const {displayProducts} = useSelector(state => state.products)
     const [showFilterModal, setShowFilterModal] = useState(false)
 
     useEffect(() => {
@@ -19,22 +19,20 @@ const Products = () => {
             dispatch(fetchProducts())
         }
     }, [])
-
+ 
     useEffect(() => {
         if(products.length > 0){
-            setDisplayProducts(products)
+            dispatch(setDisplayProducts(products))
         }
         if(filteredProducts.length > 0){
-            setDisplayProducts(filteredProducts)
+            dispatch(setDisplayProducts(filteredProducts))
         }
-    }, [products, filteredProducts])
-
-    
+    }, [products])
 
     const sortHandler = (sortValue) => {
         if(sortValue){
             const sortedProducts = sortValue === 'low' ? [...products].sort((a, b) => a.price - b.price) : [...products].sort((a, b) => b.price - a.price)
-            setDisplayProducts(sortedProducts)
+            dispatch(setDisplayProducts(sortedProducts))
         }
     }
 
@@ -43,7 +41,7 @@ const Products = () => {
             {
                 return product.price >= minPrice && product.price <= maxPrice
             })
-        setDisplayProducts(filteredProducts)
+        dispatch(setDisplayProducts(filteredProducts))
     }
 
     const closeModalHandler = () => {
