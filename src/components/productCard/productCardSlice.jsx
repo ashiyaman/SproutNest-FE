@@ -1,56 +1,75 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"; 
 
 export const productCardSlice = createSlice({
     name: 'productCard',
     initialState: {
-        wishListedProducts: [],
+        wishlistedProducts: [],
         cartProducts: [],
-        status: 'idle',
-        error: null
+        totalCartAmount: 0,
+        cartDiscount: 0,
+        deliveryCharge: 99
     },
     reducers: {
         addProduct: (state, action) => {
             const {type, product} = action.payload
-            const targetList = type === 'wishlist' ? state.wishListedProducts : state.cartProducts
-
-            const existingProduct = targetList.find(p => p._id === product._id)
-            if(existingProduct){
-                existingProduct.quantity += 1
-            }
-            else{
-                type === 'wishlist' ? 
-                    state.wishListedProducts.push({...product, quantity: 1}) :
-                    state.cartProducts.push({...product, quantity: 1})
-            }
-        },
-        removeProduct: (state, action) => {
-            const {type, product} = action.payload
-            const targetList = type === 'wishlist' ? state.wishListedProducts : state.cartProducts
-            type === 'wishlist' ? 
-                state.wishListedProducts = state.wishListedProducts.filter(p => p._id !== product._id) :
-                state.cartProducts = state.cartProducts.filter(p => p._id !== product._id)
-        },
-        changeQuantity: (state, action) => {
-            const {type, product, change} = action.payload
-            const targetList = type === 'wishlist' ? state.wishListedProducts : state.cartProducts
-            const existingProduct = targetList.find(p => p._id === product._id)
-
-            if(existingProduct){
-                if(existingProduct.quantity === 1 && change === -1){
-                    type === 'wishlist' ? 
-                        state.wishListedProducts = state.wishListedProducts.filter(p => p._id !== existingProduct._id) :
-                        state.cartProducts = state.cartProducts.filter(p => p._id !== existingProduct._id)
+            
+            if(type === 'cart'){
+                const existingProduct = state.cartProducts.find(p => p._id === product._id)
+                if(existingProduct){
+                    existingProduct.quantity += 1
+                    existingProduct.totalPrice += product.price
                 }
                 else{
-                    existingProduct.quantity = existingProduct.quantity + change
-                }                    
+                    state.cartProducts.push({...product, quantity: 1, totalPrice: product.price})
+                }                
+                state.totalCartAmount += product.price
+                state.cartDiscount = Math.round(state.totalCartAmount * 0.1)
+                state.deliveryCharge = state.totalCartAmount >= 599 ? 0 : state.deliveryCharge
             }
+            else{
+                const existingProduct = state.wishlistedProducts.find(p => p._id === product._id)
+                if(existingProduct) {
+                    return
+                }
+                else{
+                    state.wishlistedProducts.push(product)
+                }                
+            }
+        },
+
+        removeProduct: (state, action) => {
+            const {type, product} = action.payload
+            if(type === 'cart'){
+                state.cartProducts = state.cartProducts.filter(p => p._id !== product._id)
+                state.totalCartAmount -= ( product.price * product.quantity)
+                state.cartDiscount = Math.round(state.totalCartAmount * 0.1)
+                state.deliveryCharge = state.totalCartAmount >= 599 ? 0 : state.deliveryCharge
+            }
+            else{
+                state.wishlistedProducts = state.wishlistedProducts.filter(p => p._id !== product._id)
+            }
+        },
+
+        changeQuantity: (state, action) => {
+            const {product, change } = action.payload
+            const selectedProduct = state.cartProducts.find(p => p._id === product._id)
+            if(change === +1){
+                selectedProduct.quantity += 1
+                selectedProduct.totalPrice += product.price
+                state.totalCartAmount += product.price
+            }
+            else{
+                selectedProduct.quantity -= 1
+                selectedProduct.totalPrice -= product.price
+                state.totalCartAmount -= product.price
+            }
+            state.cartDiscount = Math.round(state.totalCartAmount * 0.1)
+            state.deliveryCharge = state.totalCartAmount >= 599 ? 0 : state.deliveryCharge
         }
     }
 })
 
-export default productCardSlice.reducer
-
 export const { addProduct, removeProduct, changeQuantity } = productCardSlice.actions
+
+export default productCardSlice.reducer
 

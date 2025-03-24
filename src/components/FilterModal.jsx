@@ -25,6 +25,14 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
     dispatch(setRatingFilter(selectedRating))
   }
 
+  const clearFilterHandler = () => {
+    setMinPrice(0)
+    setMaxPrice(2000)
+    priceRangeHandler(0, 5000)
+    ratingHandler(1)
+    dispatch(setRatingFilter(1))
+  }
+
   const minPercentage = (minPrice / 2000) * 100;
   const maxPercentage = (maxPrice / 2000) * 100;
   const trackStyle = {
@@ -88,6 +96,8 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
             onChange={() => ratingHandler(1)}/> 1<i className="bi bi-star-fill text-warning"></i> & up<br/>
         </div>
       </section>
+      <button className='btn btn-success fw-bold rounded-pill my-2'
+        onClick={() => clearFilterHandler()}>Clear Filters</button>
     </div>
   );
 };

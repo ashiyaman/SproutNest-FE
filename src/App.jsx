@@ -10,6 +10,7 @@ import ProductDetails from './components/products/ProductDetails'
 import ProductCard from './components/productCard/ProductCard'
 
 import './App.css'
+import Cart from './components/productCard/Cart'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/products' element={<Products />} />
           <Route path='/products/:productId' element={<ProductDetails />} />
           <Route path='/wishlist' element={<ProductCard />} />
+          <Route path='/cart' element={<Cart />} />
         </Routes>
       </Router>
     </div>
