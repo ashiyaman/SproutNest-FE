@@ -2,22 +2,29 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { setSearchFilter } from './products/productSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from './user/userSlice'
+import { useEffect } from 'react'
 
 const Header = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {user} = useSelector(state => state.user)
 
+    useEffect(() => {
+        dispatch(getUser())
+    }, [])
+
     const searchHandler = (searchValue) => {
         dispatch(setSearchFilter(searchValue))
     }
 
-    const userHandler = () => {
-        if(user){
-            navigate('/user')
+    const userHandler = () => {     
+        console.log(user)   
+        if(!user){
+            navigate('/userForm')
         }
         else{
-            navigate('/userForm')
+            navigate('/user')
         }
     }
 
@@ -33,8 +40,7 @@ const Header = () => {
                     <span className='navbar-toggler-icon' ></span>
                 </button>
                 <div className='collapse navbar-collapse flex-grow-0' id='collapsibleElement'>
-                    <ul className='navbar-nav'>
-                       
+                    <ul className='navbar-nav'>                       
                         <li className='nav-item'><Link to='/cart' className='nav-link input-transform'>
                             <i className='bi bi-cart-fill fs-5 text-light'></i>
                         </Link></li>
