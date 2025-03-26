@@ -1,9 +1,18 @@
 import { useDispatch, useSelector } from "react-redux"
 import { addProduct } from "../order/productCardSlice"
+import { useEffect } from "react"
+import { fetchProductsByCategory } from "./productSlice"
+import HorizontalProductList from "../HorizontalProductsLit"
 
 const ProductDetails = () => {
     const dispatch = useDispatch()
-    const{selectedProduct, status, error} = useSelector(state => state.products)
+    const{selectedProduct, products, status, error} = useSelector(state => state.products)
+
+    useEffect(() => {
+        if(selectedProduct?.category){
+            dispatch(fetchProductsByCategory(selectedProduct.category))
+        }        
+    }, [selectedProduct, dispatch])
 
     return (
         <main className='container py-4'>
@@ -76,6 +85,13 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>}
+            {
+                products.length > 0 && 
+                <section className='text-center my-4'>
+                    <h4 className='fw-bold my-2' style={{color: '#224d43'}}>You May Also Like</h4>
+                    <HorizontalProductList products={products} className='py-4'/>
+                </section>
+            }            
         </main>
     )
 }
