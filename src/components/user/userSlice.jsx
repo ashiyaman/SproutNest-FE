@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
+
+const SPROUTNEST_URI = 'http://localhost:3000'
+
+//const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
 
 export const getUser = createAsyncThunk('user/fetch',
     async() => {
@@ -10,16 +13,25 @@ export const getUser = createAsyncThunk('user/fetch',
     }
 )
 
-export const postUser = createAsyncThunk(`user/post`,
+export const postAddress = createAsyncThunk(`user/address/post`,
+    async(address) => {
+        const response = await axios.post(`${SPROUTNEST_URI}/user/address`, address)
+        return response.data
+    }
+ )
+
+ export const postUser = createAsyncThunk(`user/post`,
     async(userProfile) => {
         const response = await axios.post(`${SPROUTNEST_URI}/user`, userProfile)
+        console.log(response.data)
         return response.data
     }
  )
 
  export const deleteAddress = createAsyncThunk('user/delete',
-    async(addressId) => {
-        const response = await axios.delete(`${SPROUTNEST_URI}/user/address/${addressId}`)
+    async({userId, addressId}) => {
+        console.log('...addressId', addressId, userId)
+        const response = await axios.delete(`${SPROUTNEST_URI}/user/address/${addressId}`, userId)
         return response.data
     }
  )
@@ -60,7 +72,7 @@ export const userSlice = createSlice({
                 state.status = 'loading'
             })
             .addCase(deleteAddress.fulfilled, (state, action) => {
-                state.user = state.user.addresses.filter(address !== action.payload)
+                state.user = state.user.addresses.filter(address => address !== action.payload)
                 state.status = 'success'
             })
             .addCase(deleteAddress.rejected, (state, action) => {

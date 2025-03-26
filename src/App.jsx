@@ -11,8 +11,9 @@ import ProductCard from './components/order/ProductCard'
 
 import './App.css'
 import Cart from './components/order/Cart'
-import User from './components/user/User'
 import UserForm from './components/user/UserForm'
+import OrderDetails from './components/order/OrderDetails'
+import Profile from './components/user/Profile'
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
           <Route path='/products/:productId' element={<ProductDetails />} />
           <Route path='/wishlist' element={<ProductCard />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/user' element={<User />} />
-          <Route path='/userForm' element={<UserForm />} />
+          <Route path='/user' element={<Profile />} />
+          <Route path='/user/userForm' element={<UserForm />} />
+          <Route path='/order' element={<OrderDetails />} />
         </Routes>
       </Router>
     </div>

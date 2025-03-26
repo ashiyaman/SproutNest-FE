@@ -12,9 +12,12 @@ const Cart = () => {
 
     const totalItems = cartProducts.reduce((acc, curr) => acc + curr.quantity, 0)
 
-    const checkoutHandler = () => {
+    const checkoutHandler = async () => {
         if(!user){
-           navigate('/userForm')
+           await navigate('/user/userForm')
+        }
+        else{
+            await navigate('/order')
         }
     }
 

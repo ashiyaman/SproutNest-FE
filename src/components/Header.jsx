@@ -19,9 +19,8 @@ const Header = () => {
     }
 
     const userHandler = () => {     
-        console.log(user)   
         if(!user){
-            navigate('/userForm')
+            navigate('/user/userForm')
         }
         else{
             navigate('/user')
@@ -49,7 +48,7 @@ const Header = () => {
                         </Link></li>
                         <li className='nav-item'>
                             <button onClick={() => userHandler()} className='nav-link input-transform'>
-                                <i class="bi bi-person-circle text-light fs-5"></i>
+                                <i className="bi bi-person-circle text-light fs-5"></i>
                             </button>
                         </li>
                     </ul>
