@@ -15,13 +15,15 @@ export const getUser = createAsyncThunk('user/fetch',
 
 export const postAddress = createAsyncThunk(`user/address/post`,
     async(address) => {
-        const response = await axios.post(`${SPROUTNEST_URI}/user/address`, address)
+        console.log('...put...', `${SPROUTNEST_URI}/user/address`, address)
+        const response = await axios.put(`${SPROUTNEST_URI}/user/address`, address)
         return response.data
     }
  )
 
  export const postUser = createAsyncThunk(`user/post`,
     async(userProfile) => {
+        console.log('...post....', `${SPROUTNEST_URI}/user`, userProfile)
         const response = await axios.post(`${SPROUTNEST_URI}/user`, userProfile)
         console.log(response.data)
         return response.data

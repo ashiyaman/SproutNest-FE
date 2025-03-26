@@ -26,6 +26,7 @@ const UserForm = () => {
     const userRegHandler = async(e) => {
         e.preventDefault()
         if(!user){
+            console.log('....in not user...')
             const user = {
                 name: name,
                 designation: designation,
@@ -39,6 +40,7 @@ const UserForm = () => {
             await dispatch(postUser(user))
         }
         else{
+            console.log('....in else.....')
             const address = {
                 userId: user._id,
                 phoneNo: phoneNo,
@@ -92,7 +94,7 @@ const UserForm = () => {
                 <div>
                     <label className='fw-semibold'>Address Type</label><br/>
                     <input type='radio' onChange={(e) => setAddressType(e.target.value)} name='addressType' value='Home'/> Home<br/>
-                    <input type='radio' onChange={(e) => setAddressType(e.target.value)}  name='addressType' value='Office'/> Office<br/>
+                    <input type='radio' onChange={(e) => setAddressType(e.target.value)}  name='addressType' value='Work'/> Work<br/>
                     <input type='radio' onChange={(e) => setAddressType(e.target.value)}  name='addressType' value='Other'/> Other<br/>
                 </div>
                 <div className='text-center'>
