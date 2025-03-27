@@ -1,18 +1,51 @@
 import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+
 import { addProduct } from "../order/productCardSlice"
-import { useEffect } from "react"
-import { fetchProductsByCategory } from "./productSlice"
+import './productDetail.css'
+import { fetchProductsByCategory, setProductSpecification } from "./productSlice"
 import HorizontalProductList from "../HorizontalProductsLit"
 
 const ProductDetails = () => {
     const dispatch = useDispatch()
     const{selectedProduct, products, status, error} = useSelector(state => state.products)
 
+    if (status === 'pending') { return <p>Loading...</p>}
+
+    const isPlanter = selectedProduct?.productType === 'Planter'
+    const isPlantCare = selectedProduct?.productType === 'PlantCare'
+
+    const [color, setColor] = useState(isPlanter ? selectedProduct?.colors[0] : null) 
+    const [size, setSize] = useState(isPlanter ? selectedProduct?.sizes[0] : null) 
+    
+    
     useEffect(() => {
         if(selectedProduct?.category){
             dispatch(fetchProductsByCategory(selectedProduct.category))
         }        
     }, [selectedProduct, dispatch])
+
+    useEffect(() => {
+        if(selectedProduct && selectedProduct.productType === 'Planter'){
+            dispatch(setProductSpecification({type: 'color', value: color}))
+            dispatch(setProductSpecification({type: 'size', value: size}))
+        }
+    })
+
+    console.log(selectedProduct)
+
+    const colorSizeInputHandler = (type, value) => {
+        console.log('..in handler', type, value)
+        if(type === 'color'){
+            setColor(value)
+            dispatch(setProductSpecification({type:'color', value: color}))
+        }
+        if(type === 'size'){
+            setSize(value)
+            dispatch(setProductSpecification({type:'size', value: size}))
+        }
+                
+    }
 
     return (
         <main className='container py-4'>
@@ -45,42 +78,68 @@ const ProductDetails = () => {
                         {selectedProduct.tags.map((tag, index) => <div key={index} style={{background: '#8b5e3c'}} className='badge p-2 mx-2 text-light rounded-pill'>{tag}</div>)}
                     </div>
                     <h2>{selectedProduct.name}</h2>
-                    <p>4 {selectedProduct.ratings} stars | {selectedProduct.reviews.length} Reviews</p>
+                    <p className='fw-bold text-dark'><i className="bi bi-star-fill text-warning"></i> {selectedProduct.rating} stars | {selectedProduct.reviews.length}<span className='fw-normal'> Reviews</span></p>
                     <h1>₹ {selectedProduct.price}</h1>
                     <hr/>
-                    {selectedProduct.colors?.length > 1 &&
+                    {selectedProduct.productType === 'Planter' && 
+                    <>
+                        <div>
+                            <p>Select Color</p>   
+                            <div className='d-flex'>
+                                {selectedProduct.colors.map((color, index) => (
+                                    <button key={index} className='rounded-circle mx-2 border-0 color-hover' 
+                                        onClick={() => colorSizeInputHandler('color', color)}
+                                        style={{background: color, width: '35px', height: '35px'}}></button>
+                                ))}
+                            </div>
+                        </div>
                         <div>
                             <p>Select Size</p>   
                             <div className='d-flex'>
-                                {selectedProduct.colors.map((color, index) => (
-                                    <input key={index} className='rounded-circle' style={{background: color}}/>
+                                {selectedProduct.sizes.map((size, index) => (
+                                    <button key={index} className='rounded-circle mx-2 border-0 size-hover' 
+                                        onClick={() => colorSizeInputHandler('size', size)}
+                                        style={{ width: '35px', height: '35px'}}>{size}</button>
                                 ))}
                             </div>
-                            <hr/>
                         </div>
+                    </>
                     }
-                    <h5 className='fw-bold'>HIGHLIGHTS:</h5>
-                    <section className='bg-white rounded my-4 border-dark'>
-                        {selectedProduct.productType === 'Plant' ? 
-                            (<div className='d-flex p-2 my-2 text-justify'>
-                                <div className='px-2 border-end d-flex flex-column'>
-                                    <img src='../../../images/water.jpg' />
-                                    {selectedProduct.waterIntake}</div>
-                                <div className='px-2 border-end d-flex flex-column'>
-                                    <img src='../../../images/sunlight.jpg' />
-                                    {selectedProduct.sunlightRequired}</div>
-                                <div className='px-2 d-flex flex-column'>
-                                    <img src='../../../images/care.jpg' />
-                                    Care: {selectedProduct.careDifficulty}</div>
+                    {selectedProduct.productType === 'PlantCare' &&
+                        <div>
                             </div>
-                        ) : ''}
-                    </section>
+                    }
+                    {selectedProduct.productType === 'Plant' &&
+                        <>
+                            <h5 className='fw-bold'>HIGHLIGHTS:</h5>
+                            <section className='bg-white rounded my-4 border-dark'>
+                                {selectedProduct.productType === 'Plant' ? 
+                                    (<div className='d-flex p-2 my-2 text-justify'>
+                                        <div className='px-2 border-end d-flex flex-column'>
+                                            <img src='../../../images/water.jpg' />
+                                            {selectedProduct.waterIntake}</div>
+                                        <div className='px-2 border-end d-flex flex-column'>
+                                            <img src='../../../images/sunlight.jpg' />
+                                            {selectedProduct.sunlightRequired}</div>
+                                        <div className='px-2 d-flex flex-column'>
+                                            <img src='../../../images/care.jpg' />
+                                            Care: {selectedProduct.careDifficulty}</div>
+                                    </div>
+                                ) : ''}
+                            </section>
+                        </>
+                    }
+                    
                     <section className='my-3'>
                         <h5 className='fw-bold'>ABOUT:</h5>
                         <p>{selectedProduct.details}</p>
                     </section>
                     <div className='d-flex justify-content-between'>
-                        <button onClick={() => dispatch(addProduct({type: 'cart', product: selectedProduct}))} className='btn btn-success text-light my-2 rounded-pill fw-bold'>ADD TO CART</button>
+                        <button onClick={() => 
+                            {
+                                console.log()
+                                dispatch(addProduct({type: 'cart', product: selectedProduct}))
+                        }} className='btn btn-success text-light my-2 rounded-pill fw-bold'>ADD TO CART</button>
                         <button onClick={() => dispatch(addProduct({type: 'wishlist', product:selectedProduct}))}  className='btn btn-danger text-light my-2 rounded-pill fw-bold'>ADD TO WISHLIST</button>
                     </div>
                 </div>

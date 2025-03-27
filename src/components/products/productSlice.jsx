@@ -68,10 +68,14 @@ export const productSlice = createSlice({
             }
         },
         setSearchFilter: (state, action) => {
-            console.log('..in slice...', action.payload)
             const matchedProducts = state.products.filter(p => (p.name.toLowerCase().includes(action.payload) || p.details.includes(action.payload)))
             console.log(matchedProducts)
             state.displayProducts = matchedProducts
+        },
+        setProductSpecification: (state, action) => {
+            console.log('..in slice...', action.payload)
+            const {type, value} = action.payload
+            state.selectedProduct[type] = value
         }
     },
     extraReducers: (builder) => {
@@ -123,6 +127,6 @@ export const productSlice = createSlice({
     }
 })
 
-export const { setDisplayProducts, setRatingFilter, setSearchFilter } = productSlice.actions
+export const { setDisplayProducts, setRatingFilter, setSearchFilter, setProductSpecification } = productSlice.actions
 
 export default productSlice.reducer

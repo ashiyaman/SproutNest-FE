@@ -12,7 +12,7 @@ export const productCardSlice = createSlice({
     reducers: {
         addProduct: (state, action) => {
             const {type, product} = action.payload
-            
+            console.log('...in slice add pro...', type, product)
             if(type === 'cart'){
                 const existingProduct = state.cartProducts.find(p => p._id === product._id)
                 if(existingProduct){
