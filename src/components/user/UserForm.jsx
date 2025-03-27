@@ -12,7 +12,7 @@ const UserForm = () => {
     const location = useLocation()
     const {user} = useSelector(state => state.user)
 
-    const { state } = location
+    const state = location.state || {}
     
 
     const [name, setName] = useState('')
@@ -29,50 +29,36 @@ const UserForm = () => {
         dispatch(getUser())
     }, [])
 
-    const userRegHandler = async(e) => {
-        e.preventDefault()
-        if(!user){
-            const user = {
-                name: name,
-                designation: designation,
-                phoneNo: phoneNo,
-                street: street,
-                city: city,
-                country: country,
-                zip: zip,
-                addressType: addressType,
-                isDefault: isDefault
+    const userRegHandler = async (e) => {
+        e.preventDefault();
+        
+        const editAddress = location.state?.editAddress || null; // ✅ Fix
+    
+        let addressData = {
+            phoneNo, street, city, country, zip, addressType, isDefault
+        };
+    
+        if (isDefault) {
+            const updatedAddresses = user.addresses.map(addr => ({
+                ...addr,
+                isDefault: false
+            }));
+            updatedAddresses.push(addressData);
+    
+            for (const addr of updatedAddresses) {
+                await dispatch(updateAddress({ addressId: addr._id, addressToUpdate: addr }));
             }
-            await dispatch(postUser(user))
         }
-        else if(state.editAddress){
-            console.log(state.editAddress)
-            const addressToUpdate = {
-                phoneNo: phoneNo,
-                street: street,
-                city: city,
-                country: country,
-                zip: zip,
-                addressType: addressType,
-                isDefault: isDefault
-            }
-            dispatch(updateAddress(state.editAddress._id, addressToUpdate))
+    
+        if (editAddress) {
+            await dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }));
+        } else {
+            addressData.userId = user._id;
+            await dispatch(postAddress(addressData));
         }
-        else{
-            const address = {
-                userId: user._id,
-                phoneNo: phoneNo,
-                street: street,
-                city: city,
-                country: country,
-                zip: zip,
-                addressType: addressType,
-                isDefault: isDefault
-            }
-            await dispatch(postAddress(address))
-        }   
-        navigate('/user')  
-    }
+    
+        navigate('/user');
+    };
     
     return(
         <main className='container py-4'>

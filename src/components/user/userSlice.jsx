@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 
-const SPROUTNEST_URI = 'http://localhost:3000'
+//const SPROUTNEST_URI = 'http://localhost:3000'
 
-//const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
+const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
 
 export const getUser = createAsyncThunk('user/fetch',
     async() => {
@@ -27,12 +27,14 @@ export const postAddress = createAsyncThunk(`user/address/post`,
     }
  )
 
- export const updateAddress = createAsyncThunk('user/address/update',
-    async({addressId, addressToUpdate}) => {
-        const response = await axios.put(`${SPROUTNEST_URI}/user/address/${addressId}`, {data: {addressToUpdate}})
-        return response.data
+ export const updateAddress = createAsyncThunk(
+    'user/address/update',
+    async ({ addressId, addressToUpdate }) => {
+        const response = await axios.put(`${SPROUTNEST_URI}/user/address/${addressId}`, addressToUpdate);
+        return response.data;
     }
- )
+);
+
 
  export const deleteAddress = createAsyncThunk('user/delete',
     async({userId, addressId}) => {

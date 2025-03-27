@@ -76,7 +76,8 @@ const ProductDetails = () => {
                                 const activeClass = index === 0 ? 'active' : ''
                                 return (
                                     <div key={index} className={`carousel-item ${activeClass}`}>
-                                        <img className="d-block w-100 img-fluid rounded" src={image} alt={`${selectedProduct.name}-${index}`}/>
+                                        <img className="d-block w-100 img-fluid rounded" src={image} 
+                                            alt={`${selectedProduct.name}-${index}`}/>
                                     </div>
                                 )
                             })}

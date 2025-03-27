@@ -8,3 +8,9 @@
     color: antiquewhite;
     border: none;
 }
+
+.carousel-item img {
+    height: 600px; 
+    object-fit: cover; 
+    width: 100%; 
+}
