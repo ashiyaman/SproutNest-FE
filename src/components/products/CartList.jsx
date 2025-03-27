@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 
 import { addProduct, removeProduct, changeQuantity } from "../order/productCardSlice"
+import { setAlert } from "../notifications/loadingAlertSlice"
 
 const CartList = () => {
     const dispatch = useDispatch()
@@ -25,13 +26,15 @@ const CartList = () => {
                                 <div className="col-md-8 text-start">
                                     <p className="fw-bold mb-1">{cartProduct.name}</p>
                                     <span className="fw-bold text-success fs-5">₹ {cartProduct.price}</span>
-                                    {cartProduct.selectedColor && 
-                                        <p className="text-muted small">Color: {cartProduct.selectedColor}</p>
+                                    {cartProduct.color && 
+                                        <p className="text-success small">Color: {cartProduct.color}</p>
                                     }
-                                    {cartProduct.selectedSize && 
-                                        <p className="text-muted small">Size: {cartProduct.selectedSize}</p>
+                                    {cartProduct.size && 
+                                        <p className="text-success small">Size: {cartProduct.size}</p>
                                     }
-                                    
+                                    {cartProduct.weight && 
+                                        <p className="text-success small">Size: {cartProduct.weight}</p>
+                                    }
                                     <div className="d-flex align-items-center my-2">
                                         <div className="btn btn-outline-success btn-sm rounded-pill">
                                             <button 
@@ -49,6 +52,7 @@ const CartList = () => {
                                             onClick={() => {
                                                 dispatch(addProduct({type: 'wishlist', product: cartProduct}))
                                                 dispatch(removeProduct({type: 'cart', product: cartProduct}))
+                                                dispatch(setAlert(`Item added to wishlist and removed from cart.`))
                                             }
                                             }
                                             className="btn btn-success fw-semibold rounded-pill px-3">

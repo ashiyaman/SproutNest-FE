@@ -16,10 +16,13 @@ const CategoryList = () => {
         dispatch(fetchCategories())
     }, [])
 
-    const onClickHandler = (categoryId) => {
-        dispatch(fetchProductsByCategory(categoryId))
-        navigate('/products', {state: products})
-    }
+    const onClickHandler = async (categoryId) => {
+        const result = await dispatch(fetchProductsByCategory(categoryId));
+        
+        if (result.payload) {
+            navigate('/products', { state: result.payload });
+        }
+    };
 
     return (        
         <section className='d-flex justify-content-evenly'>

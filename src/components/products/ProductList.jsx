@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom"
-
 import { useDispatch } from "react-redux"
 
 import { fetchProductById } from "./productSlice"
 import { addProduct } from "../order/productCardSlice"
+import { setAlert } from "../notifications/loadingAlertSlice"
+
 const ProductList = ({products}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -30,10 +31,16 @@ const ProductList = ({products}) => {
                         <p className='fw-semibold'>₹ {product.price}</p>
                         <div className='d-flex flex-column'>
                             <button
-                                onClick={() => dispatch(addProduct({type: 'cart', product: product}))}
+                                onClick={() => {
+                                    dispatch(addProduct({type: 'cart', product: product}))
+                                    dispatch(setAlert(`Item added to cart.`))
+                                }}
                                 className='btn btn-outline-success fw-bold rounded-pill my-2'>ADD TO CART</button>
                             <button 
-                                onClick={() => dispatch(addProduct({type:'wishlist', product: product}))}
+                                onClick={() => {
+                                    dispatch(addProduct({type:'wishlist', product: product}))
+                                    dispatch(setAlert(`Item added to wishlist.`))
+                                }}
                                 className='btn btn-outline-danger fw-bold rounded-pill my-2'>
                                 ADD TO WISHLIST
                             </button>

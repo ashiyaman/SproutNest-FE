@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Spinner } from 'react-bootstrap'
 
 import {fetchProducts, setDisplayProducts} from './productSlice'
 import CategoryList from '../../components/CategoryList'
@@ -30,14 +31,16 @@ const Products = () => {
     }, [products])
 
     const sortHandler = (sortValue) => {
-        if(sortValue){
-            const sortedProducts = sortValue === 'low' ? [...products].sort((a, b) => a.price - b.price) : [...products].sort((a, b) => b.price - a.price)
-            dispatch(setDisplayProducts(sortedProducts))
+        if (sortValue) {
+            const sortedProducts = sortValue === 'low' 
+                ? [...displayProducts].sort((a, b) => a.price - b.price) 
+                : [...displayProducts].sort((a, b) => b.price - a.price);
+            dispatch(setDisplayProducts(sortedProducts));
         }
-    }
+    };
 
     const priceRangeHandler = (minPrice, maxPrice) => {
-        const filteredProducts = [...products].filter(product => 
+        const filteredProducts = [...displayProducts].filter(product => 
             {
                 return product.price >= minPrice && product.price <= maxPrice
             })
@@ -50,6 +53,12 @@ const Products = () => {
 
     return (
         <main className='py-4'>
+            {status === 'loading' && (
+                <div className="d-flex justify-content-center my-3">
+                    <Spinner animation="border" variant="primary" />
+                    <span className="ms-2">Loading products...</span>
+                </div>
+            )}
             <div className='position-relative'>
                 <CategoryList />
                 <section className='m-4 d-flex justify-content-between'>

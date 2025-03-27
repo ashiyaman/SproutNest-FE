@@ -11,10 +11,7 @@
     const Landing = () => {
         const dispatch = useDispatch()
         const navigate = useNavigate()
-        const {categories} = useSelector(state => state.categories)
         const {products} = useSelector(state => state.products)
-
-        console.log(products)
 
         useEffect(() => {
             dispatch(fetchCategories())
