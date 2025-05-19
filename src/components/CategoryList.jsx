@@ -24,7 +24,7 @@ const CategoryList = () => {
     };
 
     return (        
-        <section className='row' style={{maxWidth: '100%;', overflowX: 'hidden'}}>
+        <section className='row' style={{maxWidth: '100%;'}}>
             {categories && categories.length > 0 && categories.map(category => (
             <button key={category._id} 
                 onClick={() => onClickHandler(category._id)}
