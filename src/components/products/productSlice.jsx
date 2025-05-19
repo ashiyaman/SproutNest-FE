@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
+//const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
 
-//const SPROUTNEST_URI = 'http://localhost:3000'
+const SPROUTNEST_URI = 'http://localhost:3000'
 
 export const fetchProducts = createAsyncThunk(
     'products/fetch',
@@ -25,6 +25,7 @@ export const fetchProductsByCategory = createAsyncThunk(
     'products/fetchByCategory',
     async(categoryId) => {
         const response = await axios.get(`${SPROUTNEST_URI}/products/category/${categoryId}`)
+        console.log('....products cat.....', response.data)
         return response.data
     }
 )
