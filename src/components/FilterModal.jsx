@@ -7,7 +7,7 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
   const dispatch = useDispatch()
 
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(2000);
+  const [maxPrice, setMaxPrice] = useState(1500);
 
   const handleMinChange = (e) => {
     const value = parseInt(e.target.value);
@@ -27,14 +27,14 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
 
   const clearFilterHandler = () => {
     setMinPrice(0)
-    setMaxPrice(2000)
-    priceRangeHandler(0, 5000)
+    setMaxPrice(1500)
+    priceRangeHandler(0, 1500)
     ratingHandler(1)
     dispatch(setRatingFilter(1))
   }
 
-  const minPercentage = (minPrice / 2000) * 100;
-  const maxPercentage = (maxPrice / 2000) * 100;
+  const minPercentage = (minPrice / 1500) * 100;
+  const maxPercentage = (maxPrice / 1500) * 100;
   const trackStyle = {
     background: `linear-gradient(to right, #ccc ${minPercentage}%, #224d43 ${minPercentage}%, #224d43 ${maxPercentage}%, #ccc ${maxPercentage}%)`,
   };
@@ -50,7 +50,7 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
       <hr/>
       <section  className='my-3'>
         <h5>Price:</h5>
-        <div className="price-inputs">
+        {/*<div className="price-inputs">
             <div className="input-box">
             <span>₹</span>
             <input type="number" value={minPrice} onChange={handleMinChange} />
@@ -60,14 +60,15 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
             <span>₹</span>
             <input type="number" value={maxPrice} onChange={handleMaxChange} />
             </div>
-        </div>
+        </div>*/}
 
         <div className="slider-container">
             <div className="slider-track" style={trackStyle}></div>
             <input
             type="range"
             min="0"
-            max="2000"
+            max="1500"
+            step="50"
             value={minPrice}
             onChange={handleMinChange}
             className="slider slider-min"
@@ -75,7 +76,8 @@ const FilterModal = ({ closeModalHandler, priceRangeHandler }) => {
             <input
             type="range"
             min="0"
-            max="2000"
+            max="1500"
+            step="50"
             value={maxPrice}
             onChange={handleMaxChange}
             className="slider slider-max"

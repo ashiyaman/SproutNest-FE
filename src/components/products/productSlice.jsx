@@ -58,14 +58,21 @@ export const productSlice = createSlice({
             const ratingThreshold = parseFloat(action.payload)
             state.filter = action.payload
             if(state.filter === 'All'){
-                state.filteredProducts = [...state.products]
+                state.displayProducts = [...state.products]
             }
             else{
-                state.filteredProducts = state.products.filter(product => 
+                state.displayProducts = state.products.filter(product => 
                         product.rating >= ratingThreshold.toFixed(2)
                     )
             }
         },
+
+        setRangeFilter: (state, action) => {
+            state.displayProducts = state.products.filter(product =>       
+                product.price >= action.payload.minPrice && product.price <= action.payload.maxPrice
+            )            
+        },
+
         setSearchFilter: (state, action) => {
             const matchedProducts = state.products.filter(p => (p.name.toLowerCase().includes(action.payload) || p.details.includes(action.payload)))
             state.displayProducts = matchedProducts
@@ -124,6 +131,6 @@ export const productSlice = createSlice({
     }
 })
 
-export const { setDisplayProducts, setRatingFilter, setSearchFilter, setProductSpecification } = productSlice.actions
+export const { setDisplayProducts, setRatingFilter, setRangeFilter, setSearchFilter, setProductSpecification } = productSlice.actions
 
 export default productSlice.reducer

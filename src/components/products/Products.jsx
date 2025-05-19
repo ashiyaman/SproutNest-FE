@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spinner } from 'react-bootstrap'
 
-import {fetchProducts, setDisplayProducts} from './productSlice'
+import {fetchProducts, setDisplayProducts, setRangeFilter} from './productSlice'
 import CategoryList from '../../components/CategoryList'
 import ProductList from './ProductList'
 import FilterModal from '../../components/FilterModal'
@@ -28,7 +28,7 @@ const Products = () => {
         if(filteredProducts.length > 0){
             dispatch(setDisplayProducts(filteredProducts))
         }
-    }, [products])
+    }, [products, filteredProducts])
 
     const sortHandler = (sortValue) => {
         if (sortValue) {
@@ -40,11 +40,7 @@ const Products = () => {
     };
 
     const priceRangeHandler = (minPrice, maxPrice) => {
-        const filteredProducts = [...displayProducts].filter(product => 
-            {
-                return product.price >= minPrice && product.price <= maxPrice
-            })
-        dispatch(setDisplayProducts(filteredProducts))
+        dispatch(setRangeFilter({minPrice: parseInt(minPrice), maxPrice: parseInt(maxPrice)}))
     }
 
     const closeModalHandler = () => {
