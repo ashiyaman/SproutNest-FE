@@ -61,14 +61,14 @@ export const productSlice = createSlice({
                 state.displayProducts = [...state.products]
             }
             else{
-                state.displayProducts = state.products.filter(product => 
+                state.displayProducts = state.displayProducts.filter(product => 
                         product.rating >= ratingThreshold.toFixed(2)
                     )
             }
         },
 
         setRangeFilter: (state, action) => {
-            state.displayProducts = state.products.filter(product =>       
+            state.displayProducts = state.displayProducts.filter(product =>       
                 product.price >= action.payload.minPrice && product.price <= action.payload.maxPrice
             )            
         },

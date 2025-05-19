@@ -17,19 +17,18 @@ const CategoryList = () => {
     }, [])
 
     const onClickHandler = async (categoryId) => {
-        const result = await dispatch(fetchProductsByCategory(categoryId));
-        
-        if (result.payload) {
+        const result = dispatch(fetchProductsByCategory(categoryId));
+        if (result) {
             navigate('/products', { state: result.payload });
         }
     };
 
     return (        
-        <section className='d-flex justify-content-evenly'>
-            {categories && categories.length > 0 &&categories.map(category => (
+        <section className='row' style={{maxWidth: '100%;', overflowX: 'hidden'}}>
+            {categories && categories.length > 0 && categories.map(category => (
             <button key={category._id} 
                 onClick={() => onClickHandler(category._id)}
-                className='d-flex border-0 bg-transparent flex-column align-items-center text-decoration-none category-image'>
+                className='col d-flex border-0 bg-transparent flex-column align-items-center text-decoration-none category-image'>
                 <img
                     src={`../images/categories/${category.name}.svg`} 
                     className='rounded-circle mx-1 p-1 shadow-lg'

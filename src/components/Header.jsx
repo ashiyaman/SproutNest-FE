@@ -28,7 +28,7 @@ const Header = () => {
     }
 
     return (
-        <nav className='navbar navbar-expand-lg navbar-dark py-3 w-100' style={{backgroundColor: '#8B5E3C'}}>
+        <nav className='navbar navbar-expand-lg navbar-dark py-3' style={{backgroundColor: '#8B5E3C', maxWidth: '100% !important'}}>
             <div className='container'>
                 <a href='/' className='navbar-brand text-light fw-bold'>SproutNest</a>
                 <button className='rounded-pill bg-light border-success border-3'>

@@ -15,6 +15,8 @@ const Products = () => {
     const {displayProducts} = useSelector(state => state.products)
     const [showFilterModal, setShowFilterModal] = useState(false)
 
+    console.log(products)
+
     useEffect(() => {
         if(!selectedCategory){
             dispatch(fetchProducts())
@@ -63,9 +65,9 @@ const Products = () => {
                         Filter</button>
                     <select className='rounded fw-semibold fx-2 border-3' onChange={(e) => sortHandler(e.target.value)} 
                         style={{color: '#224d43', borderColor: '#224d43', cursor: 'pointer'}}>
-                        <option style={{color: '#224d43', backgroundColor: '#F5F5DC'}} value='all'>Sort By Price:</option>
-                        <option style={{color: '#224d43', backgroundColor: '#F5F5DC'}} value='low'>Low to High</option>
-                        <option style={{color: '#224d43', backgroundColor: '#F5F5DC'}} value='high'>High to Low</option>
+                        <option style={{color: '#224d43', backgroundColor: '#f5f5dc'}} value='all'>Sort By Price:</option>
+                        <option style={{color: '#224d43', backgroundColor: '#f5f5dc'}} value='low'>Low to High</option>
+                        <option style={{color: '#224d43', backgroundColor: '#f5f5dc'}} value='high'>High to Low</option>
                     </select>
                 </section>
                 <section className='mx-4'>
