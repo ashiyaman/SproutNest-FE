@@ -15,7 +15,7 @@ const Products = () => {
     const {displayProducts} = useSelector(state => state.products)
     const [showFilterModal, setShowFilterModal] = useState(false)
 
-    console.log(products)
+    console.log(products.length)
 
     useEffect(() => {
         if(!selectedCategory){

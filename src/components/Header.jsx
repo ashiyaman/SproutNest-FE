@@ -9,6 +9,9 @@ const Header = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {user} = useSelector(state => state.user)
+    const {cartProducts, wishlistedProducts} = useSelector(state => state.productCard)
+
+    console.log(cartProducts, wishlistedProducts)
 
     useEffect(() => {
         dispatch(getUser())
@@ -40,13 +43,23 @@ const Header = () => {
                 </button>
                 <div className='collapse navbar-collapse flex-grow-0' id='collapsibleElement'>
                     <ul className='navbar-nav'>                       
-                        <li className='nav-item'><Link to='/cart' className='nav-link input-transform'>
-                            <i className='bi bi-cart-fill fs-5 text-light'></i>
+                        <li className='nav-item mx-2'>
+                            <Link to='/cart' className='nav-link input-transform'>
+                                <i className='bi bi-cart-fill fs-4 text-light position-relative'>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                        {cartProducts.length}
+                                    </span>
+                                </i>
+                            </Link>
+                        </li>
+                        <li className='nav-item mx-2'><Link to='/wishlist' className='nav-link input-transform'>
+                            <i className='bi bi-heart-fill text-light fs-4 position-relative'>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                    {wishlistedProducts.length}
+                                </span>
+                            </i>
                         </Link></li>
-                        <li className='nav-item'><Link to='/wishlist' className='nav-link input-transform'>
-                            <i className='bi bi-heart-fill text-light fs-5 '></i>
-                        </Link></li>
-                        <li className='nav-item'>
+                        <li className='nav-item mx-2'>
                             <button onClick={() => userHandler()} className='nav-link input-transform'>
                                 <i className="bi bi-person-circle text-light fs-5"></i>
                             </button>

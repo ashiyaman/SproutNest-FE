@@ -10,8 +10,6 @@ const Cart = () => {
     const { cartProducts = [], totalCartAmount, cartDiscount, deliveryCharge } = useSelector(state => state.productCard)
     const {user, status, error} = useSelector(state => state.user)
 
-    console.log('...in cart user....', user)
-
     const totalItems = cartProducts.reduce((acc, curr) => acc + curr.quantity, 0)
 
     const checkoutHandler = async () => {
