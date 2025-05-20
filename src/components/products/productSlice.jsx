@@ -1,143 +1,153 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 //const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
 
-const SPROUTNEST_URI = 'http://localhost:3000'
+const SPROUTNEST_URI = "http://localhost:3000";
 
-export const fetchProducts = createAsyncThunk(
-    'products/fetch',
-    async() => {
-        const response = await axios.get(`${SPROUTNEST_URI}/products`)
-        return response.data
-    }
-)
+export const fetchProducts = createAsyncThunk("products/fetch", async () => {
+  const response = await axios.get(`${SPROUTNEST_URI}/products`);
+  return response.data;
+});
 
 export const fetchNewProducts = createAsyncThunk(
-    'products/new/fetch',
-    async() => {
-        const response = await axios.get(`${SPROUTNEST_URI}/products?new=true`)
-        return response.data
-    }    
-)
+  "products/new/fetch",
+  async () => {
+    const response = await axios.get(`${SPROUTNEST_URI}/products?new=true`);
+    return response.data;
+  }
+);
 
 export const fetchProductsByCategory = createAsyncThunk(
-    'products/fetchByCategory',
-    async(categoryId) => {
-        const response = await axios.get(`${SPROUTNEST_URI}/products/category/${categoryId}`)
-        return response.data
-    }
-)
+  "products/fetchByCategory",
+  async (categoryId) => {
+    const response = await axios.get(
+      `${SPROUTNEST_URI}/products/category/${categoryId}`
+    );
+    return response.data;
+  }
+);
 
 export const fetchProductById = createAsyncThunk(
-    'product/fetchById',
-    async(productId) => {
-        const response = await axios.get(`${SPROUTNEST_URI}/products/${productId}`)
-        return response.data
-    }
-)
+  "product/fetchById",
+  async (productId) => {
+    const response = await axios.get(`${SPROUTNEST_URI}/products/${productId}`);
+    return response.data;
+  }
+);
 
 export const productSlice = createSlice({
-    name: 'Products',
-    initialState: {
-        displayProducts: [],
-        filteredProducts: [],
-        products: [],
-        selectedProduct: {
-            selectedSpecification: []
-        },
-        filter: 'All',
-        status: 'idle',
-        error: null
+  name: "Products",
+  initialState: {
+    displayProducts: [],
+    filteredProducts: [],
+    products: [],
+    selectedProduct: {
+      selectedSpecification: [],
     },
-    reducers: {
-        setDisplayProducts: (state, action) => {
-            state.displayProducts = action.payload
-        },
-
-        setRatingFilter: (state, action) => {
-            const ratingThreshold = parseFloat(action.payload)
-            state.filter = action.payload
-            if(state.filter === 'All'){
-                state.displayProducts = [...state.products]
-            }
-            else{
-                state.displayProducts = state.displayProducts.filter(product => 
-                        product.rating >= ratingThreshold
-                    )
-            }
-        },
-
-        setRangeFilter: (state, action) => {
-            state.displayProducts = state.displayProducts.filter(product =>       
-                product.price >= action.payload.minPrice && product.price <= action.payload.maxPrice
-            )            
-        },
-
-        setSearchFilter: (state, action) => {
-            const matchedProducts = state.products.filter(p => (p.name.toLowerCase().includes(action.payload) || p.details.toLowerCase().includes(action.payload)))
-            state.displayProducts = matchedProducts
-        },
-
-        setProductSpecification: (state, action) => {
-            console.log('state....', state)
-            console.log('poayload........', action.payload)
-            const {type, value} = action.payload
-            state.selectedProduct.selectedSpecification = [...state?.selectedProduct.selectedSpecification, action.payload]
-        }
+    filter: "All",
+    status: "idle",
+    error: null,
+  },
+  reducers: {
+    setDisplayProducts: (state, action) => {
+      state.displayProducts = action.payload;
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchProducts.pending, state => {
-                state.status = 'loading'
-            })
-            .addCase(fetchProducts.fulfilled, (state, action) => {
-                state.status = 'success',
-                state.products = action.payload
-            })
-            .addCase(fetchProducts.rejected, (state, action) => {
-                state.status = 'error',
-                state.error = action.payload
-            })
-            .addCase(fetchNewProducts.pending, state => {
-                state.status = 'loading'
-            })
-            .addCase(fetchNewProducts.fulfilled, (state, action) => {
-                state.status = 'success',
-                state.products = action.payload
-            })
-            .addCase(fetchNewProducts.rejected, (state, action) => {
-                state.status = 'error',
-                state.error = action.payload
-            })
-            .addCase(fetchProductById.pending, state => {
-                state.status = 'loading'
-            })
-            .addCase(fetchProductById.fulfilled, (state, action) => {
-                state.status = 'success',
-                state.selectedProduct = {
-                    ...action.payload,
-                    selectedSpecification: []
-                }
-            })
-            .addCase(fetchProductById.rejected, (state, action) => {
-                state.status = 'error',
-                state.error = action.payload
-            })
-            .addCase(fetchProductsByCategory.pending, state => {
-                state.status = 'loading'
-            })
-            .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
-                state.status = 'success',
-                state.products = action.payload
-            })
-            .addCase(fetchProductsByCategory.rejected, (state, action) => {
-                state.status = 'error',
-                state.error = action.payload
-            })
-    }
-})
 
-export const { setDisplayProducts, setRatingFilter, setRangeFilter, setSearchFilter, setProductSpecification } = productSlice.actions
+    setRatingFilter: (state, action) => {
+      const ratingThreshold = parseFloat(action.payload);
+      state.filter = action.payload;
+      if (state.filter === "All") {
+        state.displayProducts = [...state.products];
+      } else {
+        state.displayProducts = state.displayProducts.filter(
+          (product) => product.rating >= ratingThreshold
+        );
+      }
+    },
 
-export default productSlice.reducer
+    setRangeFilter: (state, action) => {
+      state.displayProducts = state.displayProducts.filter(
+        (product) =>
+          product.price >= action.payload.minPrice &&
+          product.price <= action.payload.maxPrice
+      );
+    },
+
+    setSearchFilter: (state, action) => {
+      const matchedProducts = state.products.filter(
+        (p) =>
+          p.name.toLowerCase().includes(action.payload) ||
+          p.details.toLowerCase().includes(action.payload)
+      );
+      state.displayProducts = matchedProducts;
+    },
+
+    setProductSpecification: (state, action) => {
+      const { type, value } = action.payload;
+      if (!state.selectedProduct.selectedSpecification) {
+        state.selectedProduct.selectedSpecification = {};
+      }
+      state.selectedProduct.selectedSpecification[type] = value;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        (state.status = "success"), (state.products = action.payload);
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        (state.status = "error"), (state.error = action.payload);
+      })
+      .addCase(fetchNewProducts.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchNewProducts.fulfilled, (state, action) => {
+        (state.status = "success"), (state.products = action.payload);
+      })
+      .addCase(fetchNewProducts.rejected, (state, action) => {
+        (state.status = "error"), (state.error = action.payload);
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.status = "success";
+        const { colors, sizes, weights } = action.payload;
+        state.selectedProduct = {
+          ...action.payload,
+          selectedSpecification: {
+            color: colors?.[0] || null,
+            size: sizes?.[0] || null,
+            weight: weights?.[0] || null,
+          },
+        };
+      })
+
+      .addCase(fetchProductById.rejected, (state, action) => {
+        (state.status = "error"), (state.error = action.payload);
+      })
+      .addCase(fetchProductsByCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        (state.status = "success"), (state.products = action.payload);
+      })
+      .addCase(fetchProductsByCategory.rejected, (state, action) => {
+        (state.status = "error"), (state.error = action.payload);
+      });
+  },
+});
+
+export const {
+  setDisplayProducts,
+  setRatingFilter,
+  setRangeFilter,
+  setSearchFilter,
+  setProductSpecification,
+} = productSlice.actions;
+
+export default productSlice.reducer;
