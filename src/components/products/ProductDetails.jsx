@@ -169,7 +169,7 @@ const ProductDetails = () => {
             {
                 products.length > 0 && 
                 <section className='text-center my-4'>
-                    <h4 className='fw-bold my-2' style={{color: '#224d43'}}>You May Also Like</h4>
+                    <h4 className='fw-bold my-2 mb-3' style={{color: '#224d43'}}>You May Also Like</h4>
                     <HorizontalProductList products={products} className='py-4'/>
                 </section>
             }            

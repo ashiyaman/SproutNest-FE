@@ -13,7 +13,7 @@ const HorizontalProductList = ({ products }) => {
   };
 
   return (
-    <div className="row d-flex justify-content-between">
+    <div className="row d-flex justify-content-center">
         {products.map((product) => (
           <div className="col-sm-12 col-md-3 product-card mx-2" key={product._id}>
             <div
