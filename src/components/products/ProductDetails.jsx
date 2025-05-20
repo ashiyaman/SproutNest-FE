@@ -56,7 +56,7 @@ const ProductDetails = () => {
         <main className='container py-4'>           
             {selectedProduct && status !== 'loading' &&
             <div className='row py-2'>
-                <div className='col-md-6'>
+                <div className='col-lg-6'>
                     <div id="productCarousel" className="carousel slide" data-bs-ride="carousel">
                         <ol className="carousel-indicators">
                             {selectedProduct?.images.map((image, index) => {
@@ -78,7 +78,7 @@ const ProductDetails = () => {
                         </div>
                     </div>
                 </div>
-                <div className='col-md-6 py-2 px-4' style={{color: '#224d43'}}>
+                <div className='col-lg-6 py-2 px-3' style={{color: '#224d43'}}>
                     <div className='d-flex my-2'>
                         {selectedProduct.tags.map((tag, index) => <div key={index} style={{background: '#8b5e3c'}} className='badge p-2 mx-2 text-light rounded-pill'>{tag}</div>)}
                     </div>

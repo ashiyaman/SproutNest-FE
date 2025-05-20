@@ -28,7 +28,7 @@ const CategoryList = () => {
             {categories && categories.length > 0 && categories.map(category => (
             <button key={category._id} 
                 onClick={() => onClickHandler(category._id)}
-                className='col d-flex border-0 bg-transparent flex-column align-items-center text-decoration-none category-image'>
+                className='col-sm-12 col-md-2 d-flex border-0 bg-transparent flex-column align-items-center text-decoration-none category-image'>
                 <img
                     src={`../images/categories/${category.name}.svg`} 
                     className='rounded-circle mx-1 p-1 shadow-lg'

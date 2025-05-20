@@ -49,10 +49,10 @@
                     </button>
                 </section>
                 <section className='my-4 py-2'>
-                    <h4 className='fw-bold my-2' style={{color: '#224d43'}}>New Products</h4>
+                    <h4 className='fw-bold my-2 py-4' style={{color: '#224d43'}}>New Products</h4>
                     {products.length > 0 && <HorizontalProductList products = {products}/>}
                 </section>
-                <button onClick={() => navigate('/products')} className='btn btn-outline-success my-4 fw-bold'>VIEW PRODUCTS</button>
+                <button onClick={() => navigate('/products')} className='btn btn-outline-success my-2 fw-bold'>VIEW PRODUCTS</button>
             </main>
         )
     }

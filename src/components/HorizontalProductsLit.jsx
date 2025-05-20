@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { fetchProductById } from "./products/productSlice";
 
-import './horizontalProductList.css'
-
 const HorizontalProductList = ({ products }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,10 +13,9 @@ const HorizontalProductList = ({ products }) => {
   };
 
   return (
-    <div className="horizontal-scroll-wrapper py-2">
-      <div className="horizontal-scroll d-flex">
+    <div className="row d-flex justify-content-between">
         {products.map((product) => (
-          <div className="product-card mx-2" key={product._id}>
+          <div className="col-sm-12 col-md-3 product-card mx-2" key={product._id}>
             <div
               className="card rounded border-0"
               style={{ cursor: "pointer" }}
@@ -44,7 +41,6 @@ const HorizontalProductList = ({ products }) => {
             </div>
           </div>
         ))}
-      </div>
     </div>
   );
 };
