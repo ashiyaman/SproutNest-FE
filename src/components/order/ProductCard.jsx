@@ -13,7 +13,7 @@ const ProductCard = () => {
         <main className="container py-5" style={{ color: "#224d43" }}>
             <h5 className="fw-bold">My Wishlist</h5>
             <hr />
-            <section>
+            <section>                                                           
                 {wishlistedProducts.length === 0 ? (
                     <div className="text-center my-4">
                         <p >Your Wishlist is empty.</p>

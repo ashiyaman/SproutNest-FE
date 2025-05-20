@@ -15,8 +15,8 @@ const HorizontalProductList = ({products}) => {
     return (        
         <div className='d-flex flex-wrap w-100 justify-content-around' >
             {products.map(product =>
-                <div className='mx-2'>
-                    <div key={product._id} className='card rounded border-0' style={{cursor: 'pointer'}}>
+                <div className='mx-2' key={product._id}>
+                    <div  className='card rounded border-0' style={{cursor: 'pointer'}}>
                     <img
                         src={product.images[0]} 
                         alt={product.name} 

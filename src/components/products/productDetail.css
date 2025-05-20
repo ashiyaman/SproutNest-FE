@@ -1,16 +1,60 @@
-.item:hover {
-    border: 3px solid #8b5e3c;
-    transform: scale(1.3)
+.item {
+    transition: transform 0.3s ease, border 0.3s ease;
+    transform-origin: center;
 }
 
-.fill-hover:hover {
+.item:hover {
+    border: 3px solid #8b5e3c;
+    transform: scale(1.3);
+}
+
+.fill-hover {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.fill-hover:hover{
     background-color: #8b5e3c;
     color: antiquewhite;
     border: none;
 }
 
+.color-item-hover.selected,
+.color-fill-hover.selected {
+    /*background-color: #8b5e3c !important;
+    color: antiquewhite !important;*/
+    border: 2px solid #5a3d2b !important;
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.item-hover.selected,
+.fill-hover.selected {
+    background-color: #8b5e3c !important;
+    color: antiquewhite !important;
+    border: 2px solid #5a3d2b !important;
+    transform: scale(1.1);
+    transition: all 0.2s ease-in-out;
+}
+
+.fill-hover:active {
+    background-color: #8b5e3c;
+    color: antiquewhite;
+    border: none;
+}
+
+.fill-hover::selection {
+    background-color: #8b5e3c;
+    color: antiquewhite;
+}
+
 .carousel-item img {
-    height: 600px; 
-    object-fit: cover; 
-    width: 100%; 
+    height: 600px;
+    object-fit: cover;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 300px;
+    }
 }

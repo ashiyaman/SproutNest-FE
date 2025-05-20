@@ -6,6 +6,7 @@ import { setAlert } from "../notifications/loadingAlertSlice"
 const CartList = () => {
     const dispatch = useDispatch()
     const { cartProducts = [] } = useSelector(state => state.productCard)
+    console.log('...............cart.................', cartProducts)
     return(
         <>
             {
@@ -26,15 +27,7 @@ const CartList = () => {
                                 <div className="col-md-8 text-start">
                                     <p className="fw-bold mb-1">{cartProduct.name}</p>
                                     <span className="fw-bold text-success fs-5">₹ {cartProduct.price}</span>
-                                    {cartProduct.color && 
-                                        <p className="text-success small">Color: {cartProduct.color}</p>
-                                    }
-                                    {cartProduct.size && 
-                                        <p className="text-success small">Size: {cartProduct.size}</p>
-                                    }
-                                    {cartProduct.weight && 
-                                        <p className="text-success small">Size: {cartProduct.weight}</p>
-                                    }
+                                    {cartProduct.selectedSpecification.map(spec => <p className="text-success fw-semibold">{spec.type}: {spec.value}</p>)}
                                     <div className="d-flex align-items-center my-2">
                                         <div className="btn btn-outline-success btn-sm rounded-pill">
                                             <button 

@@ -25,7 +25,6 @@ export const fetchProductsByCategory = createAsyncThunk(
     'products/fetchByCategory',
     async(categoryId) => {
         const response = await axios.get(`${SPROUTNEST_URI}/products/category/${categoryId}`)
-        console.log('....products cat.....', response.data)
         return response.data
     }
 )
@@ -44,7 +43,9 @@ export const productSlice = createSlice({
         displayProducts: [],
         filteredProducts: [],
         products: [],
-        selectedProduct: null,
+        selectedProduct: {
+            selectedSpecification: []
+        },
         filter: 'All',
         status: 'idle',
         error: null
@@ -62,7 +63,7 @@ export const productSlice = createSlice({
             }
             else{
                 state.displayProducts = state.displayProducts.filter(product => 
-                        product.rating >= ratingThreshold.toFixed(2)
+                        product.rating >= ratingThreshold
                     )
             }
         },
@@ -74,12 +75,15 @@ export const productSlice = createSlice({
         },
 
         setSearchFilter: (state, action) => {
-            const matchedProducts = state.products.filter(p => (p.name.toLowerCase().includes(action.payload) || p.details.includes(action.payload)))
+            const matchedProducts = state.products.filter(p => (p.name.toLowerCase().includes(action.payload) || p.details.toLowerCase().includes(action.payload)))
             state.displayProducts = matchedProducts
         },
+
         setProductSpecification: (state, action) => {
+            console.log('state....', state)
+            console.log('poayload........', action.payload)
             const {type, value} = action.payload
-            state.selectedProduct[type] = value
+            state.selectedProduct.selectedSpecification = [...state?.selectedProduct.selectedSpecification, action.payload]
         }
     },
     extraReducers: (builder) => {
@@ -92,7 +96,7 @@ export const productSlice = createSlice({
                 state.products = action.payload
             })
             .addCase(fetchProducts.rejected, (state, action) => {
-                state.status = 'error'
+                state.status = 'error',
                 state.error = action.payload
             })
             .addCase(fetchNewProducts.pending, state => {
@@ -103,7 +107,7 @@ export const productSlice = createSlice({
                 state.products = action.payload
             })
             .addCase(fetchNewProducts.rejected, (state, action) => {
-                state.status = 'error'
+                state.status = 'error',
                 state.error = action.payload
             })
             .addCase(fetchProductById.pending, state => {
@@ -111,10 +115,13 @@ export const productSlice = createSlice({
             })
             .addCase(fetchProductById.fulfilled, (state, action) => {
                 state.status = 'success',
-                state.selectedProduct = action.payload
+                state.selectedProduct = {
+                    ...action.payload,
+                    selectedSpecification: []
+                }
             })
             .addCase(fetchProductById.rejected, (state, action) => {
-                state.status = 'error'
+                state.status = 'error',
                 state.error = action.payload
             })
             .addCase(fetchProductsByCategory.pending, state => {
@@ -125,7 +132,7 @@ export const productSlice = createSlice({
                 state.products = action.payload
             })
             .addCase(fetchProductsByCategory.rejected, (state, action) => {
-                state.status = 'error'
+                state.status = 'error',
                 state.error = action.payload
             })
     }

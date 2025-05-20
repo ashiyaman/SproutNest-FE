@@ -28,17 +28,14 @@ const Cart = () => {
             {cartProducts.length === 0 ? 
                 (
                 <div>
-                    <p>Your Cart is empty.</p>    
-                    <div className='text-center'>
-                        <Link className='btn btn-outline-success rounded-pill px-auto fw-semibold' to='/products'>EXPLORE OUR PRODUCTS</Link>
-                    </div>
+                    <p>Your Cart is empty.</p>
                 </div>) :
                 (
                     <div className='row '>
-                        <div className='col-8'>
+                        <div className='col-md-8'>
                             <CartList />
                         </div>
-                        <div className='col-4'>
+                        <div className='col-md-4'>
                             <div className='container card text-start' style={{ color: "#224d43" }}>
                                 <p className='mt-2 fw-bold'>PRICE DETAILS</p>
                                 <hr/>
@@ -71,7 +68,11 @@ const Cart = () => {
                         </div>
                     </div>
                 )
-            }            
+            } 
+            <hr />
+            <div className='text-center'>
+                <Link className='btn btn-outline-success rounded-pill px-auto fw-semibold' to='/products'>EXPLORE MORE PRODUCTS</Link>
+            </div>           
         </main>
     )
 }

@@ -11,6 +11,7 @@ import { setAlert } from "../notifications/loadingAlertSlice"
 const ProductDetails = () => {
     const dispatch = useDispatch()
     const{selectedProduct, products, status, error} = useSelector(state => state.products)
+    console.log('sele prod....................................................', selectedProduct)
 
     const [color, setColor] = useState(null) 
     const [size, setSize] = useState(null) 
@@ -22,13 +23,11 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (selectedProduct) {
-            if (selectedProduct?.colors?.length > 0) setColor(selectedProduct.colors[0]);
-            if (selectedProduct?.sizes?.length > 0) setSize(selectedProduct.sizes[0]);
-            if (selectedProduct?.weights?.length > 0) setWeight(selectedProduct.weights[0]);
+            if (selectedProduct?.colors?.length > 0) dispatch(setProductSpecification({'color': selectedProduct.colors[0]}))
+                if (selectedProduct?.sizes?.length > 0) dispatch(setProductSpecification({'size': selectedProduct.sizes[0]}))
+                    if (selectedProduct?.weights?.length > 0) dispatch(setProductSpecification({'weight': selectedProduct.weights[0]}))
         }
-    }, [selectedProduct]);
-
-
+    }, []);
     
     useEffect(() => {
         if(selectedProduct?.category){
@@ -36,15 +35,9 @@ const ProductDetails = () => {
         }        
     }, [selectedProduct, dispatch])
 
-    useEffect(() => {
-        if (selectedProduct) {
-            if (hasColor) dispatch(setProductSpecification({ type: 'color', value: color }));
-            if (hasSize) dispatch(setProductSpecification({ type: 'size', value: size }));
-            if (hasWeight) dispatch(setProductSpecification({ type: 'weight', value: weight }));
-        }
-    }, [selectedProduct, color, size, weight, dispatch]);
-    
+  
     const specificationInputHandler = (type, value) => {
+        console.log('in handler.............', type, value)
         if (type === 'color') setColor(value);
         if (type === 'size') setSize(value);
         if (type === 'weight') setWeight(value);
@@ -97,11 +90,14 @@ const ProductDetails = () => {
                         <div>
                             <p>Select Color</p>   
                             <div className='d-flex'>
-                                {selectedProduct.colors.map((color, index) => (
-                                    <button key={index} className='rounded-circle mx-2 border-0 item-hover' 
-                                        onClick={() => specificationInputHandler('color', color)}
-                                        style={{background: color, width: '35px', height: '35px'}}></button>
-                                ))}
+                                {selectedProduct.colors.map((colorOption, index) => {
+                                    console.log('...color............', colorOption)
+                                    return (
+                                    <button key={index} className={`rounded-circle mx-2 border-0 color-item-hover color-fill ${color === colorOption ? 'selected' : ''}`}
+                                        onClick={() => specificationInputHandler('color', colorOption)}
+                                        style={{backgroundColor: colorOption, width: '35px', height: '35px'}}></button>
+                                )}
+                            )}
                             </div>
                         </div>
                     }
@@ -109,10 +105,10 @@ const ProductDetails = () => {
                         <div className='my-4'>
                             <p>Select Size</p>   
                             <div className='d-flex'>
-                                {selectedProduct.sizes.map((size, index) => (
-                                    <button key={index} className='rounded-pill px-2 mx-2 fw-bold border-success item-hover fill-hover' 
-                                        onClick={() => specificationInputHandler('size', size)}
-                                        style={{ width: '35px', height: '35px'}}>{size}</button>
+                                {selectedProduct.sizes.map((sizeOption, index) => (
+                                    <button key={index} className={`rounded-pill px-2 mx-2 fw-bold border-success item-hover fill-hover ${size === sizeOption ? 'selected' : ''}`} 
+                                        onClick={() => specificationInputHandler('size', sizeOption)}
+                                        style={{ width: '35px', height: '35px'}}>{sizeOption}</button>
                                 ))}
                             </div>
                         </div>
@@ -121,10 +117,10 @@ const ProductDetails = () => {
                         <div className='my-4'>
                             <p>Select Weight</p>   
                             <div className='d-flex'>
-                                {selectedProduct.weights.map((weight, index) => (
-                                    <button key={index} className='rounded-pill mx-2 px-2 fw-bold border-success item-hover fill-hover' 
-                                        onClick={() => specificationInputHandler('weight', weight)}
-                                       >{weight}</button>
+                                {selectedProduct.weights.map((weightOption, index) => (
+                                    <button key={index} className={`rounded-pill px-2 mx-2 fw-bold border-success item-hover fill-hover ${weight === weightOption ? 'selected' : ''}`}
+                                        onClick={() => specificationInputHandler('weight', weightOption)}
+                                       >{weightOption}</button>
                                 ))}
                             </div>
                         </div>

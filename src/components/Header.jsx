@@ -11,8 +11,6 @@ const Header = () => {
     const {user} = useSelector(state => state.user)
     const {cartProducts, wishlistedProducts} = useSelector(state => state.productCard)
 
-    console.log(cartProducts, wishlistedProducts)
-
     useEffect(() => {
         dispatch(getUser())
     }, [])
@@ -46,7 +44,7 @@ const Header = () => {
                         <li className='nav-item mx-2'>
                             <Link to='/cart' className='nav-link input-transform'>
                                 <i className='bi bi-cart-fill fs-4 text-light position-relative'>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
                                         {cartProducts.length}
                                     </span>
                                 </i>
@@ -54,7 +52,7 @@ const Header = () => {
                         </li>
                         <li className='nav-item mx-2'><Link to='/wishlist' className='nav-link input-transform'>
                             <i className='bi bi-heart-fill text-light fs-4 position-relative'>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
                                     {wishlistedProducts.length}
                                 </span>
                             </i>
