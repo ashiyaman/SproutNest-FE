@@ -11,7 +11,6 @@ import { setAlert } from "../notifications/loadingAlertSlice"
 const ProductDetails = () => {
     const dispatch = useDispatch()
     const{selectedProduct, products, status, error} = useSelector(state => state.products)
-    console.log('sele prod....................................................', selectedProduct)
 
     const color = selectedProduct?.setProductSpecification?.color
     const size = selectedProduct?.setProductSpecification?.size
@@ -92,7 +91,6 @@ const ProductDetails = () => {
                             <p>Select Color</p>   
                             <div className='d-flex'>
                                 {selectedProduct.colors.map((colorOption, index) => {
-                                    console.log('...color............', colorOption)
                                     return (
                                     <button key={index} className={`rounded-circle mx-2 border-0 color-item-hover color-fill ${selectedProduct?.selectedSpecification?.color === colorOption ? 'selected' : ''}`}
                                         onClick={() => specificationInputHandler('color', colorOption)}

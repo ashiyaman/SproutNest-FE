@@ -12,40 +12,40 @@ const UserForm = () => {
     const location = useLocation()
     const {user} = useSelector(state => state.user)
 
+    console.log('is user there.....................', user)
+
     const state = location.state || {}    
 
     const [name, setName] = useState('')
-    const [designation, setDesignation] = useState('')
     const [phoneNo, setPhoneNo] = useState(state?.editAddress ? state.editAddress.phoneNo : '')
     const [street, setStreet] = useState(state?.editAddress ? state.editAddress.street : '')
     const [city, setCity] = useState(state?.editAddress ? state.editAddress.city : '')
     const [country, setCountry] = useState(state?.editAddress ? state.editAddress.country : '')
     const [zip, setZip] = useState(state?.editAddress ? state.editAddress.zip : '')
-    const [addressType, setAddressType] = useState(state?.editAddress ? state.editAddress.addressType : '')
+    const [isShippingAddress, setIsShippingAddress] = useState(state?.editAddress ? state.editAddress.isShippingAddress : false)
 
     const userRegHandler = async (e) => {
         e.preventDefault();
         
         const editAddress = location.state?.editAddress || null; 
     
+        console.log('in userrrrrrrrrrrrr reggggg....................', user)
+        if(!user || user === null || !user.addresses || user.addresses.length < 1 ) setIsShippingAddress(true)
+
         let addressData = {
-            phoneNo, street, city, country, zip, addressType
+            phoneNo, street, city, country, zip, isShippingAddress
         };
 
         console.log('....is edit address....', editAddress)
-     
+
         if (editAddress) {
-            await dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }));
+            console.log('we are editing........')
+            dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }));
         } else {
-            const address = await dispatch(postAddress(addressData));
-
             const userData = {
-                name: name,
-                designation: designation,
-                address: address._id
+                name, phoneNo, street, city, country, zip, isShippingAddress
             }
-
-            await dispatch(postUser(userData))
+            dispatch(postUser(userData))
         }
     
         navigate('/userProfile');
@@ -61,11 +61,7 @@ const UserForm = () => {
                         <label className='fw-semibold'>Name: </label>
                         <input type='text' required onChange={(e) => setName(e.target.value)} value={name} className='form-control'/>
                     </div><br/>
-                    <div>
-                        <label className='fw-semibold'>Designation: </label>
-                        <input type='text' onChange={(e) => setDesignation(e.target.value)} className='form-control'/>
-                    </div><br/>
-                    </>
+                </>
                 }
                 <div>
                     <label className='fw-semibold'>Phone No: </label>
@@ -88,10 +84,7 @@ const UserForm = () => {
                     <input type='number' className='form-control' required value={zip} onChange={(e) => setZip(e.target.value)}/>
                 </div><br/>
                 <div>
-                    <label className='fw-semibold'>Address Type</label><br/>
-                    <input type='radio' onChange={(e) => setAddressType(e.target.value)} name='addressType' value='Home'/> Home<br/>
-                    <input type='radio' onChange={(e) => setAddressType(e.target.value)}  name='addressType' value='Work'/> Work<br/>
-                    <input type='radio' onChange={(e) => setAddressType(e.target.value)}  name='addressType' value='Other'/> Other<br/>
+                    <input type='checkbox' className="fw-semibold" onChange={(e) => setIsShippingAddress(!isShippingAddress)} /> Set this as default address<br/>
                 </div><br/>
                 <div className='text-center'>
                     {!user  ?

@@ -88,7 +88,7 @@ export const productSlice = createSlice({
       if (!state.selectedProduct.selectedSpecification) {
         state.selectedProduct.selectedSpecification = {};
       }
-      state.selectedProduct.selectedSpecification[type] = value;
+      [...state.selectedProduct.selectedSpecification[type] = value]
     },
   },
   extraReducers: (builder) => {

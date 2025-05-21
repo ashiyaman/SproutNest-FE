@@ -20,7 +20,8 @@ const Header = () => {
     }
 
     const userHandler = () => {     
-        if(!user){
+        console.log('user......in handler......................', user)
+        if(!user || user.length <= 0){
             navigate('/user/userForm')
         }
         else{

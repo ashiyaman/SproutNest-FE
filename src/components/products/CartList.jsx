@@ -29,7 +29,6 @@ const CartList = () => {
                                     <span className="fw-bold text-success fs-5">₹ {cartProduct.price}</span>
                                     <div>
                                     {Object.entries(cartProduct.selectedSpecification).map(([key, value]) => {
-                                        console.log('key...........', key, value)
                                         return (value && <p className="text-success fw-semibold">{key}: {value}</p>)
                                     })}
                                     </div>
