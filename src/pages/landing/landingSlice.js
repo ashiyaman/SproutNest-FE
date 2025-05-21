@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
+//const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
 
-//const SPROUTNEST_URI = 'http://localhost:3000'
+const SPROUTNEST_URI = 'http://localhost:3000'
 
 export const fetchCategories = createAsyncThunk(
     'categories/fetch',
@@ -36,10 +36,10 @@ export const landingSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCategories.pending, state => {
-                state.status = 'pending'
+                state.status = 'loading'
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
-                state.status = 'loading',
+                state.status = 'success',
                 state.categories = action.payload
             })
             .addCase(fetchCategories.rejected, (state, action) => {
@@ -47,10 +47,10 @@ export const landingSlice = createSlice({
                 state.error = action.payload
             })
             .addCase(fetchCategoryById.pending, state => {
-                state.status = 'pending'
+                state.status = 'loading'
             })
             .addCase(fetchCategoryById.fulfilled, (state, action) => {
-                state.status = 'loading',
+                state.status = 'success',
                 state.selectedCategory = action.payload
             })
             .addCase(fetchCategoryById.rejected, (state, action) => {

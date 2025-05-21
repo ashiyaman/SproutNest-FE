@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { postUser, postAddress, getUser, updateAddress } from "./userSlice"
+import { postUser, postAddress, updateAddress } from "./userSlice"
 
 const UserForm = () => {
     
@@ -11,8 +11,6 @@ const UserForm = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const {user} = useSelector(state => state.user)
-
-    console.log('is user there.....................', user)
 
     const state = location.state || {}    
 
@@ -28,24 +26,30 @@ const UserForm = () => {
         e.preventDefault();
         
         const editAddress = location.state?.editAddress || null; 
-    
-        console.log('in userrrrrrrrrrrrr reggggg....................', user)
+
+        const firstUser = !user || user === null ? 1 : 0
+
         if(!user || user === null || !user.addresses || user.addresses.length < 1 ) setIsShippingAddress(true)
 
         let addressData = {
-            phoneNo, street, city, country, zip, isShippingAddress
+            phoneNo, street, city, country, zip, isShippingAddress: firstUser ? true : false
         };
-
-        console.log('....is edit address....', editAddress)
 
         if (editAddress) {
             console.log('we are editing........')
             dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }));
         } else {
-            const userData = {
-                name, phoneNo, street, city, country, zip, isShippingAddress
+            if(firstUser == 0){
+                dispatch(postAddress({user, addressData}))
             }
-            dispatch(postUser(userData))
+            else{
+                console.log('.........add first addres........')
+                const userData = {
+                ...addressData
+                }
+                dispatch(postUser(userData))
+            }
+            
         }
     
         navigate('/userProfile');

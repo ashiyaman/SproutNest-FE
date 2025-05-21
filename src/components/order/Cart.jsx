@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 import CartList from "../products/CartList"
-import { postUser } from "../user/userSlice"
 
 const Cart = () => {
     const navigate = useNavigate()

@@ -4,28 +4,31 @@ import { Spinner } from 'react-bootstrap'
 
 import {
   deleteAddress,
-  getAddresses,
   getUser,
-  setShippingAddress,
+  postAddress
 } from "./userSlice.jsx";
 import { useEffect } from "react";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, userAddresses, status } = useSelector((state) => state.user);
+  const { user, status } = useSelector((state) => state.user);
 
-  console.log("...profile.....................", user, userAddresses);
 
   useEffect(() => {
     dispatch(getUser());
-    dispatch(getAddresses())
   }, []);
 
   const editDetailsHandler = (editAddress) => {
-    console.log("....edit addr...", editAddress);
     navigate("/user/userForm", { state: { editAddress: editAddress } });
   };
+
+  const setShippingAddress = (selectedAddress) => {
+    const updatedAddress = user.addresses.map(address => {
+        (address._id === selectedAddress._id) ? address.isShippingAddress(true) : address.isShippingAddress(false)
+    })
+    postAddress(updatedAddress)
+  }
 
   return (
     <main className="container py-4" style={{ color: "#224d43" }}>
@@ -45,15 +48,13 @@ const Profile = () => {
               {user.addresses.map((address) => (
                 <div
                   key={address._id}
-                  className="card container py-4"
+                  className="card container py-4 my-3"
                   style={{ color: "#224d43" }}
                 >
-                  <p className="fw-semibold">{user.name}</p>
-                  <p>
-                    {address.street}, {address.city}, {address.country},{" "}
-                    {address.zip}.
-                  </p>
-                  {user.phoneNo && <p>Phone No: {user.phoneNo}</p>}
+                  <p>{address.street}, </p>
+                  <p>{address.city}, </p>
+                  <p>{address.country}, {address.zip}.</p>
+                  {user?.phoneNo && <p>Phone No: {user.phoneNo}</p>}
                   <div className="d-flex justify-content-around">
                     <button
                       className="btn btn-success fw-bold rounded-pill my-2"
@@ -65,10 +66,7 @@ const Profile = () => {
                       className="btn btn-danger fw-bold rounded-pill my-2"
                       onClick={() =>
                         dispatch(
-                          deleteAddress({
-                            userId: user._id,
-                            addressId: address._id,
-                          })
+                          deleteAddress({ user, address })
                         )
                       }
                     >
