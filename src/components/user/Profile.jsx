@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { setAlert } from "../notifications/loadingAlertSlice";
 import { Spinner } from 'react-bootstrap'
 
 import {
@@ -17,7 +18,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [user]);
 
   const editDetailsHandler = (editAddress) => {
     navigate("/user/userForm", { state: { editAddress: editAddress } });
@@ -68,6 +69,7 @@ const Profile = () => {
                       {
                         console.log('................in delete btn..........', address)
                         dispatch(deleteAddress({ user, addressData: address }))
+                        dispatch(setAlert(`Address deleted from your profile.`))
                       }
                       }
                     >

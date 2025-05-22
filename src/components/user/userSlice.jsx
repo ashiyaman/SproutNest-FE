@@ -101,7 +101,7 @@ export const userSlice = createSlice({
       })
       .addCase(postAddress.fulfilled, (state, action) => {
         console.log('....in xtra reducer.....', action.payload)
-        state.user.addresses = [...state.user.addresses, action.payload];
+        state.user = [...state.user.addresses, action.payload];
         state.status = "success";
       })
       .addCase(postAddress.rejected, (state, action) => {

@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import { postUser, postAddress, updateAddress } from "./userSlice"
+import { setAlert } from "../notifications/loadingAlertSlice"
 
 const UserForm = () => {
     
@@ -37,11 +38,13 @@ const UserForm = () => {
 
         if (editAddress) {
             console.log('we are editing........')
-            dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }));
+            dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }))
+                .then(() => dispatch(setAlert(`Address Updated successfully.`)))
         } else {
             if(firstUser == 0){
                 console.log('....user another addrr...........', addressData)
                 dispatch(postAddress({user, addressData}))
+                    .then(() => dispatch(setAlert(`Added new Address successfully.`)))
             }
             else{
                 console.log('.........add first addres........')
@@ -49,6 +52,7 @@ const UserForm = () => {
                    ...addressData
                 }
                 dispatch(postUser(userData))
+                    .dispatch(() => dispatch(setAlert(`User registered successfully.`)))
             }
             
         }
