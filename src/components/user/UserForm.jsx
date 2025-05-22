@@ -40,12 +40,13 @@ const UserForm = () => {
             dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }));
         } else {
             if(firstUser == 0){
+                console.log('....user another addrr...........', addressData)
                 dispatch(postAddress({user, addressData}))
             }
             else{
                 console.log('.........add first addres........')
                 const userData = {
-                ...addressData
+                   ...addressData
                 }
                 dispatch(postUser(userData))
             }

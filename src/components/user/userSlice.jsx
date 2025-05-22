@@ -44,9 +44,9 @@ export const updateAddress = createAsyncThunk(
 export const deleteAddress = createAsyncThunk(
   "address/delete",
   async ({user, addressData}) => {
+    console.log('.....in delete address............', addressData)
     const response = await axios.delete(
-      `${SPROUTNEST_URI}/${user._id}/${addressData._id}`,
-      addressData
+      `${SPROUTNEST_URI}/${user._id}/${addressData._id}`
     );
     console.log("...1.user slice........delete................", response.data);
     return response.data;
@@ -123,6 +123,7 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(deleteAddress.fulfilled, (state, action) => {
+        console.log('...exyra dreducer..............................', action.payload)
         state.user.addresses = state.user.addresses.filter(
           (address) => address._id !== action.payload._id
         );

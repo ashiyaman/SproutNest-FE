@@ -65,9 +65,10 @@ const Profile = () => {
                     <button
                       className="btn btn-danger fw-bold rounded-pill my-2"
                       onClick={() =>
-                        dispatch(
-                          deleteAddress({ user, address })
-                        )
+                      {
+                        console.log('................in delete btn..........', address)
+                        dispatch(deleteAddress({ user, addressData: address }))
+                      }
                       }
                     >
                       Delete
