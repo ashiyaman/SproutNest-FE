@@ -13,12 +13,14 @@ import { useEffect } from "react";
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, status } = useSelector((state) => state.user);
+  const { user, status } = useSelector(state => state.user);
 
-
+  if(status === 'success'){
+    console.log('user after success................', user)
+  }
   useEffect(() => {
     dispatch(getUser());
-  }, [user]);
+  }, []);
 
   const editDetailsHandler = (editAddress) => {
     navigate("/user/userForm", { state: { editAddress: editAddress } });
@@ -39,7 +41,7 @@ const Profile = () => {
           <span className="ms-2">Loading...</span>
         </div>
       )}
-      {user && (
+      {status === 'success' && user && (
         <>
           <h3 className="my-3">Welcome, {user?.name}</h3>
           <hr />
@@ -67,7 +69,6 @@ const Profile = () => {
                       className="btn btn-danger fw-bold rounded-pill my-2"
                       onClick={() =>
                       {
-                        console.log('................in delete btn..........', address)
                         dispatch(deleteAddress({ user, addressData: address }))
                         dispatch(setAlert(`Address deleted from your profile.`))
                       }

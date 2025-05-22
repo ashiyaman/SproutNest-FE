@@ -42,12 +42,10 @@ const UserForm = () => {
                 .then(() => dispatch(setAlert(`Address Updated successfully.`)))
         } else {
             if(firstUser == 0){
-                console.log('....user another addrr...........', addressData)
                 dispatch(postAddress({user, addressData}))
                     .then(() => dispatch(setAlert(`Added new Address successfully.`)))
             }
             else{
-                console.log('.........add first addres........')
                 const userData = {
                    ...addressData
                 }

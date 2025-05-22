@@ -16,14 +16,9 @@ export const postUser = createAsyncThunk("user/post", async (userData) => {
 export const postAddress = createAsyncThunk(
   "user/address/post",
   async ({user, addressData}) => {
-    console.log(".......post addr.......", user._id);
     const response = await axios.post(
       `${SPROUTNEST_URI}/${user._id}/address`,
       addressData
-    );
-    console.log(
-      "...1.user slice.....post addr .......respo................",
-      response.data
     );
     return response.data;
   }
@@ -36,7 +31,6 @@ export const updateAddress = createAsyncThunk(
       `${SPROUTNEST_URI}/${state.user._id}/${addressData._id}`,
       addressData
     );
-    console.log("...1.user slice........update................", response.data);
     return response.data;
   }
 );
@@ -44,11 +38,9 @@ export const updateAddress = createAsyncThunk(
 export const deleteAddress = createAsyncThunk(
   "address/delete",
   async ({user, addressData}) => {
-    console.log('.....in delete address............', addressData)
     const response = await axios.delete(
       `${SPROUTNEST_URI}/${user._id}/${addressData._id}`
     );
-    console.log("...1.user slice........delete................", response.data);
     return response.data;
   }
 );
@@ -58,10 +50,6 @@ export const setShippingAddress = createAsyncThunk(
   async (addressData) => {
     const response = await axios.post(
       `${SPROUTNEST_URI}/${state.user._id}/${addressData._id}`
-    );
-    console.log(
-      "...1.user slice........set shipping addr................",
-      response.data
     );
     return response.data;
   }
@@ -90,7 +78,9 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(postUser.fulfilled, (state, action) => {
-        (state.user = action.payload), (state.status = "success");
+        console.log('...add address success............', action.payload)
+        state.user = action.payload,
+        state.status = "success"
       })
       .addCase(postUser.rejected, (state, action) => {
         state.status = "error";
@@ -100,8 +90,8 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(postAddress.fulfilled, (state, action) => {
-        console.log('....in xtra reducer.....', action.payload)
-        state.user = [...state.user.addresses, action.payload];
+        console.log('....in xtra reducer...success................', action.payload)
+        state.user = action.payload
         state.status = "success";
       })
       .addCase(postAddress.rejected, (state, action) => {
@@ -112,7 +102,7 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(updateAddress.fulfilled, (state, action) => {
-        state.user = [...state.addresses, action.payload];
+        state.user = [...state.user, state.user.addresses = [...state.addresses, action.payload]]
         state.status = "success";
       })
       .addCase(updateAddress.rejected, (state, action) => {
@@ -123,10 +113,8 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(deleteAddress.fulfilled, (state, action) => {
-        console.log('...exyra dreducer..............................', action.payload)
-        state.user.addresses = state.user.addresses.filter(
-          (address) => address._id !== action.payload._id
-        );
+        console.log('...exyra dreducer.......delete successssssssssssss.......................', action.payload)
+        state.user = action.payload
         state.status = "success";
       })
       .addCase(deleteAddress.rejected, (state, action) => {
