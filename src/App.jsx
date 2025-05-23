@@ -21,7 +21,7 @@ import AddressList from './components/order/AddressList'
 
 function App() {
   return (
-    <div style={{minHeight: '100vw', maxWidth: '100% !important', backgroundColor: '#F5F5DC'}}>      
+    <div style={{minHeight: '100vh', maxWidth: '100% !important', backgroundColor: '#F5F5DC'}}>      
       <Router>
         <Header />
         <Loading />
