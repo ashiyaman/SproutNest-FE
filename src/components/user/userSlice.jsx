@@ -3,23 +3,31 @@ import axios from "axios";
 
 const SPROUTNEST_URI = "http://localhost:3000";
 
+export const registerNewUser = createAsyncThunk("user/register", async(userData) => {
+  const response = await axios.post(`${SPROUTNEST_URI}/v1/user/register`, userData)
+  return response.data
+})
+
 export const getUser = createAsyncThunk("user/fetch", async () => {
   const response = await axios.get(`${SPROUTNEST_URI}/user`);
   return response.data;
 });
 
 export const postUser = createAsyncThunk("user/post", async (userData) => {
+    console.log('user databefore saving..............', userData)
   const response = await axios.post(`${SPROUTNEST_URI}/user`, userData);
   return response.data;
 });
 
 export const postAddress = createAsyncThunk(
   "user/address/post",
-  async ({user, addressData}) => {
+  async (addressData) => {
+    console.log('adding another addr..............222............', addressData)
     const response = await axios.post(
-      `${SPROUTNEST_URI}/${user._id}/address`,
+      `${SPROUTNEST_URI}/v1/${addressData.user._id}/address`,
       addressData
     );
+    console.log('adding another addr..............33333............', response.data)
     return response.data;
   }
 );
@@ -78,7 +86,7 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(postUser.fulfilled, (state, action) => {
-        console.log('...add address success............', action.payload)
+        console.log('...add user.........after success............', action.payload)
         state.user = action.payload,
         state.status = "success"
       })
@@ -102,7 +110,7 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(updateAddress.fulfilled, (state, action) => {
-        state.user = [...state.user, state.user.addresses = [...state.addresses, action.payload]]
+        state.user = action.payload
         state.status = "success";
       })
       .addCase(updateAddress.rejected, (state, action) => {
@@ -118,6 +126,18 @@ export const userSlice = createSlice({
         state.status = "success";
       })
       .addCase(deleteAddress.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.payload;
+      })
+      .addCase(registerNewUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(registerNewUser.fulfilled, (state, action) => {
+        console.log('...exyra dreducer.......new user reggggggggggggggggggggggggggggggg successssssssssssss.......................', action.payload)
+        state.user = action.payload
+        state.status = "success";
+      })
+      .addCase(registerNewUser.rejected, (state, action) => {
         state.status = "error";
         state.error = action.payload;
       });

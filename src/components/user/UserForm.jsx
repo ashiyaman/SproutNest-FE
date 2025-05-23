@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
-import { postUser, postAddress, updateAddress } from "./userSlice"
+import { postUser, postAddress, updateAddress, setShippingAddress, registerNewUser } from "./userSlice"
 import { setAlert } from "../notifications/loadingAlertSlice"
 
 const UserForm = () => {
@@ -23,44 +23,39 @@ const UserForm = () => {
     const [zip, setZip] = useState(state?.editAddress ? state.editAddress.zip : '')
     const [isShippingAddress, setIsShippingAddress] = useState(state?.editAddress ? state.editAddress.isShippingAddress : false)
 
-    const userRegHandler = async (e) => {
-        e.preventDefault();
-        
+    const addAddressHandler = async (e) => {
+        e.preventDefault();                
+
         const editAddress = location.state?.editAddress || null; 
-
-        const firstUser = !user || user === null ? 1 : 0
-
-        if(!user || user === null || !user.addresses || user.addresses.length < 1 ) setIsShippingAddress(true)
-
         let addressData = {
-            phoneNo, street, city, country, zip, isShippingAddress: firstUser ? true : false
+            phoneNo, street, city, country, zip, isShippingAddress, user 
         };
 
         if (editAddress) {
             console.log('we are editing........')
             dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }))
                 .then(() => dispatch(setAlert(`Address Updated successfully.`)))
-        } else {
-            if(firstUser == 0){
-                dispatch(postAddress({user, addressData}))
-                    .then(() => dispatch(setAlert(`Added new Address successfully.`)))
-            }
-            else{
-                const userData = {
-                   ...addressData
-                }
-                dispatch(postUser(userData))
-                    .dispatch(() => dispatch(setAlert(`User registered successfully.`)))
-            }
-            
+        } 
+        else{
+            console.log('adding another addr..............1............', addressData)
+            dispatch(postAddress(addressData))
+                .then(() => dispatch(setAlert(`Added new Address successfully.`)))
         }
-    
+        
         navigate('/userProfile');
     };
+
+    const registerUser = (e) => {
+        e.preventDefault()
+        console.log('in new user reg.....................')
+        const userData = {name, street, city, country,zip, phoneNo}
+        dispatch(registerNewUser(userData))
+            .then(() => navigate('/userProfile'))
+    }
     
     return(
         <main className='container py-4'>
-            <form style={{color: '#224d43'}} onSubmit={(e) => userRegHandler(e)}>
+            <form style={{color: '#224d43'}} onSubmit={(e) => !user ? registerUser(e) : addAddressHandler(e)}>
                 <h3 className='fw-bold py-4'>User Profile</h3>
                 {(!user || user.length < 1) &&
                 <>
@@ -91,7 +86,7 @@ const UserForm = () => {
                     <input type='number' className='form-control' required value={zip} onChange={(e) => setZip(e.target.value)}/>
                 </div><br/>
                 <div>
-                    <input type='checkbox' className="fw-semibold" onChange={(e) => setIsShippingAddress(!isShippingAddress)} /> Set this as default address<br/>
+                    <input type='checkbox' checked={isShippingAddress} className="fw-semibold" onChange={(e) => setIsShippingAddress(!isShippingAddress)} /> Set this as default address<br/>
                 </div><br/>
                 <div className='text-center'>
                     {!user  ?

@@ -54,6 +54,7 @@ const Profile = () => {
                   className="card container py-4 my-3"
                   style={{ color: "#224d43" }}
                 >
+                  {(address?.isShippingAddress === true) && <p className="fw-bold" style={{color: '#8B5E3C'}}>Shipping Address: </p>}
                   <p>{address.street}, </p>
                   <p>{address.city}, </p>
                   <p>{address.country}, {address.zip}.</p>
