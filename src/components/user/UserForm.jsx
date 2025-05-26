@@ -16,6 +16,7 @@ const UserForm = () => {
     const state = location.state || {}    
 
     const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
     const [phoneNo, setPhoneNo] = useState(state?.editAddress ? state.editAddress.phoneNo : '')
     const [street, setStreet] = useState(state?.editAddress ? state.editAddress.street : '')
     const [city, setCity] = useState(state?.editAddress ? state.editAddress.city : '')
@@ -48,7 +49,7 @@ const UserForm = () => {
     const registerUser = (e) => {
         e.preventDefault()
         console.log('in new user reg.....................')
-        const userData = {name, street, city, country,zip, phoneNo}
+        const userData = {name, email, street, city, country,zip, phoneNo}
         dispatch(registerNewUser(userData))
             .then(() => navigate('/userProfile'))
     }
@@ -63,11 +64,15 @@ const UserForm = () => {
                         <label className='fw-semibold'>Name: </label>
                         <input type='text' required onChange={(e) => setName(e.target.value)} value={name} className='form-control'/>
                     </div><br/>
+                    <div>
+                        <label className='fw-semibold'>Email: </label>
+                        <input type='email' required onChange={(e) => setEmail(e.target.value)} value={email} className='form-control'/>
+                    </div><br/>
                 </>
                 }
                 <div>
                     <label className='fw-semibold'>Phone No: </label>
-                    <input type='text' className='form-control' value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)}/>
+                    <input type='number' className='form-control' value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)}/>
                 </div><br/>                
                 <div>
                     <label className='fw-semibold'>Street: </label>

@@ -4,7 +4,7 @@ import axios from "axios";
 const SPROUTNEST_URI = "http://localhost:3000";
 
 export const registerNewUser = createAsyncThunk("user/register", async(userData) => {
-  const response = await axios.post(`${SPROUTNEST_URI}/v1/user/register`, userData)
+  const response = await axios.post(`${SPROUTNEST_URI}/v1/user`, userData)
   return response.data
 })
 
@@ -45,9 +45,9 @@ export const updateAddress = createAsyncThunk(
 
 export const deleteAddress = createAsyncThunk(
   "address/delete",
-  async ({user, addressData}) => {
+  async ({userId, addressId}) => {
     const response = await axios.delete(
-      `${SPROUTNEST_URI}/${user._id}/${addressData._id}`
+      `${SPROUTNEST_URI}/${userId}/${addressId}`
     );
     return response.data;
   }

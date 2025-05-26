@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../notifications/loadingAlertSlice";
 import { Spinner } from 'react-bootstrap'
+import ToastMessage from "../notifications/ToastMessage.jsx";
 
 import {
   deleteAddress,
@@ -21,6 +22,15 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getUser());
   }, []);
+
+  const deleteAddressHandler = (userId, addressId) => {
+    console.log('in del addrrr handler.....................................')
+  if(user.addresses.length === 1){
+    dispatch(setAlert(`You are deleteing all addresses from your profile. Please consider adding a address.`))
+  }
+  dispatch(deleteAddress({userId, addressId}))
+  dispatch(setAlert(`Address deleted from your profile.`))
+}
 
   const editDetailsHandler = (editAddress) => {
     navigate("/user/userForm", { state: { editAddress: editAddress } });
@@ -44,6 +54,7 @@ const Profile = () => {
       {status === 'success' && user && (
         <>
           <h3 className="my-3">Welcome, {user?.name}</h3>
+          <h5 className="my-3">Email: {user?.email}</h5>
           <hr />
           {user?.addresses && (
             <>
@@ -70,8 +81,7 @@ const Profile = () => {
                       className="btn btn-danger fw-bold rounded-pill my-2"
                       onClick={() =>
                       {
-                        dispatch(deleteAddress({ user, addressData: address }))
-                        dispatch(setAlert(`Address deleted from your profile.`))
+                        deleteAddressHandler(user._id, address._id)
                       }
                       }
                     >
