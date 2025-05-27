@@ -6,7 +6,7 @@ import CartList from "../products/CartList"
 const Cart = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { cartProducts = [], totalCartAmount, cartDiscount, deliveryCharge } = useSelector(state => state.productCard)
+    const { cartProducts = [], totalCartAmount = 0, cartDiscount = 0, deliveryCharge = 0 } = useSelector(state => state.productCard)
     const {user, status, error} = useSelector(state => state.user)
 
     const totalItems = cartProducts.reduce((acc, curr) => acc + curr.quantity, 0)
@@ -27,7 +27,7 @@ const Cart = () => {
         <main className='container text-center py-5' style={{ color: "#224d43" }}>
             <h5 className="fw-bold">My Cart ({totalItems})</h5>
             <hr/>
-            {cartProducts.length === 0 ? 
+            {cartProducts?.length === 0 ? 
                 (
                 <div>
                     <p>Your Cart is empty.</p>
