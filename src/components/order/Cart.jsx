@@ -15,8 +15,11 @@ const Cart = () => {
         if(!user || user.length === 0){
            await navigate('/user/userForm')
         }
+        else if(user.addresses.length === 0){
+            await navigate('/userProfile')
+        }
         else{
-            await navigate('/cart/address')
+            await navigate('/cart/orderSummary')
         }
     }
 

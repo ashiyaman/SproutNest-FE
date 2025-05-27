@@ -1,26 +1,28 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { Spinner } from 'react-bootstrap'
 
 const AddressList = () => {
+    const [defaultAddress, setDefaultAddress] = useState(user.addresses.filter(address => address.isShippingAddress === true))
     const {user, status, error} = useSelector(state => state.user)
 
-    console.log(user)
+    console.log('fetching address list..............', user?.addresses)
+
+    useEffect(() => {
+
+    }, [])
 
     return (
         <main className='container'>
             {status === 'loading' && (
                 <div className="d-flex justify-content-center my-3">
                     <Spinner animation="border" variant="primary" />
-                    <span className="ms-2">Loading products...</span>
+                    <span className="ms-2">Loading Address...</span>
                 </div>
             )}
             {status === 'success' && (
                 <div>
-                    {user.addresses.map(address => (
-                        <div className='card'>
-                            <input type='radio' value={address}/> {address}
-                        </div>
-                    ))}
+                    
                 </div>
             )}
         </main>
