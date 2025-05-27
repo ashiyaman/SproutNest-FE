@@ -14,7 +14,6 @@ export const getUser = createAsyncThunk("user/fetch", async () => {
 });
 
 export const postUser = createAsyncThunk("user/post", async (userData) => {
-    console.log('user databefore saving..............', userData)
   const response = await axios.post(`${SPROUTNEST_URI}/user`, userData);
   return response.data;
 });
@@ -22,22 +21,21 @@ export const postUser = createAsyncThunk("user/post", async (userData) => {
 export const postAddress = createAsyncThunk(
   "user/address/post",
   async (addressData) => {
-    console.log('adding another addr..............222............', addressData)
     const response = await axios.post(
       `${SPROUTNEST_URI}/v1/${addressData.user._id}/address`,
       addressData
     );
-    console.log('adding another addr..............33333............', response.data)
     return response.data;
   }
 );
 
 export const updateAddress = createAsyncThunk(
   "user/address/update",
-  async (addressData) => {
+  async (address) => {
+    console.log('update address................11111..................', address)
     const response = await axios.post(
-      `${SPROUTNEST_URI}/${state.user._id}/${addressData._id}`,
-      addressData
+      `${SPROUTNEST_URI}/v1/address/${address._id}`,
+      address
     );
     return response.data;
   }
@@ -47,11 +45,12 @@ export const deleteAddress = createAsyncThunk(
   "address/delete",
   async ({userId, addressId}) => {
     const response = await axios.delete(
-      `${SPROUTNEST_URI}/${userId}/${addressId}`
+      `${SPROUTNEST_URI}/v1/${userId}/${addressId}`
     );
     return response.data;
   }
 );
+
 
 export const setShippingAddress = createAsyncThunk(
   "address/update",
@@ -86,7 +85,6 @@ export const userSlice = createSlice({
         state.status = "loading";
       })
       .addCase(postUser.fulfilled, (state, action) => {
-        console.log('...add user.........after success............', action.payload)
         state.user = action.payload,
         state.status = "success"
       })

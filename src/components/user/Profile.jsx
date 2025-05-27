@@ -7,7 +7,8 @@ import ToastMessage from "../notifications/ToastMessage.jsx";
 import {
   deleteAddress,
   getUser,
-  postAddress
+  postAddress,
+  updateAddress
 } from "./userSlice.jsx";
 import { useEffect } from "react";
 
@@ -16,15 +17,11 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user, status } = useSelector(state => state.user);
 
-  if(status === 'success'){
-    console.log('user after success................', user)
-  }
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
   const deleteAddressHandler = (userId, addressId) => {
-    console.log('in del addrrr handler.....................................')
   if(user.addresses.length === 1){
     dispatch(setAlert(`You are deleteing all addresses from your profile. Please consider adding a address.`))
   }
@@ -35,13 +32,6 @@ const Profile = () => {
   const editDetailsHandler = (editAddress) => {
     navigate("/user/userForm", { state: { editAddress: editAddress } });
   };
-
-  const setShippingAddress = (selectedAddress) => {
-    const updatedAddress = user.addresses.map(address => {
-        (address._id === selectedAddress._id) ? address.isShippingAddress(true) : address.isShippingAddress(false)
-    })
-    postAddress(updatedAddress)
-  }
 
   return (
     <main className="container py-4" style={{ color: "#224d43" }}>
@@ -92,9 +82,9 @@ const Profile = () => {
                     ) : (
                       <button
                         className="btn btn-success fw-bold rounded-pill my-2"
-                        onClick={() => setShippingAddress(address)}
+                        onClick={() => dispatch(updateAddress({...address, isShippingAddress: true}))}
                       >
-                        Set as default
+                        Set as Default
                       </button>
                     )}
                   </div>
