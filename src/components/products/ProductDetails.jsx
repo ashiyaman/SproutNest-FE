@@ -130,13 +130,13 @@ const ProductDetails = () => {
                             <section className='bg-white rounded my-4 border-dark'>
                                 {selectedProduct.productType === 'Plant' ? 
                                     (<div className='d-flex p-2 my-2 text-justify'>
-                                        <div className='px-2 border-end d-flex flex-column'>
+                                        <div className='px-2 border-end d-flex justify-content-around flex-column'>
                                             <img src='../../../images/water.jpg' />
                                             {selectedProduct.waterIntake}</div>
-                                        <div className='px-2 border-end d-flex flex-column'>
+                                        <div className='px-2 border-end d-flex justify-content-around flex-column'>
                                             <img src='../../../images/sunlight.jpg' />
                                             {selectedProduct.sunlightRequired}</div>
-                                        <div className='px-2 d-flex flex-column'>
+                                        <div className='px-2 d-flex justify-content-around flex-column'>
                                             <img src='../../../images/care.jpg' />
                                             Care: {selectedProduct.careDifficulty}</div>
                                     </div>
