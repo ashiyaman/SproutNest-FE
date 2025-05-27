@@ -29,12 +29,12 @@ const UserForm = () => {
 
         const editAddress = location.state?.editAddress || null; 
         let addressData = {
-            phoneNo, street, city, country, zip, isShippingAddress, user 
+            phoneNo, street, city, country, zip, isShippingAddress, user
         };
 
         if (editAddress) {
             console.log('we are editing........')
-            dispatch(updateAddress({ addressId: editAddress._id, addressToUpdate: addressData }))
+            dispatch(updateAddress({...addressData, _id: state.editAddress._id}))
                 .then(() => dispatch(setAlert(`Address Updated successfully.`)))
         } 
         else{
@@ -91,7 +91,7 @@ const UserForm = () => {
                     <input type='number' className='form-control' required value={zip} onChange={(e) => setZip(e.target.value)}/>
                 </div><br/>
                 <div>
-                    <input type='checkbox' checked={isShippingAddress} className="fw-semibold" onChange={(e) => setIsShippingAddress(!isShippingAddress)} /> Set this as default address<br/>
+                    <input type='checkbox' checked={isShippingAddress} className="fw-semibold" onChange={(e) => setIsShippingAddress(!isShippingAddress)} /> Set this as default Shipping Address<br/>
                 </div><br/>
                 <div className='text-center'>
                     {!user  ?
