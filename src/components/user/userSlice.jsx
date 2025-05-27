@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const SPROUTNEST_URI = "http://localhost:3000";
+//const SPROUTNEST_URI = "http://localhost:3000";
+
+const SPROUTNEST_URI = 'https://sprout-nest-be.vercel.app'
 
 export const registerNewUser = createAsyncThunk("user/register", async(userData) => {
   const response = await axios.post(`${SPROUTNEST_URI}/v1/user`, userData)
