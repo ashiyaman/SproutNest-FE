@@ -8,8 +8,6 @@ Welcome to **SproutNest**, a beautifully designed online plant store where natur
 
 - 🪴 **Wide Collection of Plants** — Indoor, outdoor, succulents, air-purifying, and flowering plants.  
 - 🌐 **User-Friendly Interface** — Smooth browsing and search experience.  
-- 💳 **Secure Checkout** — Multiple payment options and SSL secured transactions.  
-- 📦 **Fast Delivery** — Doorstep delivery with care-packed plants.  
 - 🌱 **Plant Care Guides** — Tips and tutorials to keep your plants thriving.  
 - 🧺 **Wishlist & Cart** — Save your favorites and shop anytime.  
 
@@ -20,7 +18,6 @@ Welcome to **SproutNest**, a beautifully designed online plant store where natur
 - **Frontend:** React.js, Bootstrap
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB
-- **Payments:** Razorpay Integration  
 - **Hosting:** Vercel (Frontend)
 
 ---
@@ -49,8 +46,6 @@ Create a `.env` file in the root directory:
 ```env
 PORT=3000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_secret_key
 FRONTEND_URL=http://localhost:3000
 ```  
 
