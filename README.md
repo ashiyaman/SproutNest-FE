@@ -4,6 +4,16 @@ Welcome to **SproutNest**, a beautifully designed online plant store where natur
 
 ---
 
+**🚀 Demo:** [https://sprout-nest-fe.vercel.app/](https://sprout-nest-fe.vercel.app/)
+
+---
+
+## 🎥 Project Walkthrough
+
+▶️ [**Watch the walkthrough video on Google Drive**](https://drive.google.com/file/d/1d3KfkKwKP88ZIH7epvhw6vUwN2NOrtJT/view?usp=drive_link)
+
+---
+
 ## 🚀 Features  
 
 - 🪴 **Wide Collection of Plants** — Indoor, outdoor, succulents, air-purifying, and flowering plants.  
@@ -19,6 +29,30 @@ Welcome to **SproutNest**, a beautifully designed online plant store where natur
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB
 - **Hosting:** Vercel (Frontend)
+
+---
+## 🌿 API Reference – SproutNest
+
+### User Routes
+
+- `POST /v1/user` — Register a new user  
+- `GET /user` — Fetch all users  
+- `POST /user` — Add a new user (admin)  
+- `POST /v1/:userId/address` — Add address for a user  
+- `POST /v1/address/:addressId` — Update existing address  
+- `DELETE /v1/:userId/:addressId` — Delete a specific address  
+
+### Product Routes
+
+- `GET /products` — Fetch all products  
+- `GET /products?new=true` — Fetch newly added products  
+- `GET /products/category/:categoryId` — Get products by category ID  
+- `GET /products/:productId` — Get product by ID  
+
+### Category Routes
+
+- `GET /categories` — Get all product categories  
+- `GET /categories/:categoryId` — Get single category by ID  
 
 ---
 
@@ -69,9 +103,10 @@ yarn start
 ## 📚 Plant Categories  
 
 - Indoor Plants  
-- Succulents  
+- outdoor Plants  
 - Air Purifying Plants  
-- Flowering Plants  
+- Flowering Plants
+- Pots and Planters
 - Gardening Accessories  
 
 ---
@@ -91,4 +126,3 @@ We welcome contributions! Please follow these steps:
 > 🌱 **SproutNest** — Nurture your space, naturally.  
 
 ---
-
